@@ -1,4 +1,11 @@
 # InstagramDownloader
+**برنامه ای نوشته شده با زبان سی شارپ برای دانلود محتواهایی همچون فیلم عکس و آی جی تی وی**
+
+لطفا با ما در توسعه این برنامه همکاری کنید
+
+اگر کسی میتواند در بخش لاگین به جای استفاده از کوکی از ای پی ای رسمی اینستا استفاده کند و تغییرات را با من به اشتراک بگذارد
+
+
 **A C# application to download Instagram images , Videos and IGTV**
 
 Please cooperate with us in developing the application.
