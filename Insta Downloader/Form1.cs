@@ -9,8 +9,7 @@ using System.IO;
 using System.Threading;
 using System.Net;
 using System.Diagnostics;
-using OpenQA.Selenium.IE;
-using OpenQA.Selenium.Remote;
+
 
 namespace Insta_Downloader
 {
