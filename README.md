@@ -1,3 +1,5 @@
 # InstagramDownloader
 A C# application to download Instagram images , Videos and IGTV
-ss
+
+Please cooperate with us in developing the application.
+If someone can use Instagram EPA instead of cookies in the login in the program.
