@@ -1,5 +1,5 @@
 # InstagramDownloader
-A C# application to download Instagram images , Videos and IGTV
+**A C# application to download Instagram images , Videos and IGTV**
 
 Please cooperate with us in developing the application.
 
