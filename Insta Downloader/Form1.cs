@@ -9,8 +9,11 @@ using System.IO;
 using System.Threading;
 using System.Net;
 using System.Diagnostics;
-
-
+using InstagramApiSharp.API.Builder;
+using InstagramApiSharp.Classes;
+using InstagramApiSharp.Logger;
+using InstagramApiSharp.Classes.Models;
+using InstagramApiSharp.API;
 namespace Insta_Downloader
 {
     public partial class Form1 : Form
@@ -22,12 +25,11 @@ namespace Insta_Downloader
         Stopwatch stopWatch = new Stopwatch();
         static string URL;
         static Form1 obj = new Form1();
-        Root JsonDesereialaizeObjects;
         string LinkDownloadSingleData;
         List<string> ListDownload = new List<string>();
         string startupPath2 = System.IO.Path.GetDirectoryName(System.Reflection.Assembly.GetEntryAssembly().Location);
         Thread thread;
-        
+        private static IInstaApi InstaApi;
         #endregion
 
         #region Constractor
@@ -60,6 +62,8 @@ namespace Insta_Downloader
         private void Form1_Load(object sender, EventArgs e)
         {
 
+           
+
             
         }
 
@@ -72,6 +76,7 @@ namespace Insta_Downloader
         {
             Application.Exit();
         }
+
 
         #endregion
 
@@ -380,31 +385,17 @@ namespace Insta_Downloader
         {
 
             // Apply the rule on the URL
-            string patternUrl = "^(https://www.instagram.com/p/)";
-            System.Text.RegularExpressions.Regex expression = new System.Text.RegularExpressions.Regex(patternUrl);
+            
 
             //Check the input URL Structure
-            if (expression.IsMatch(txtUrl.Text))
-            {
-                //FIX the Input URL structure
-                if (txtUrl.Text.Contains("?utm_source=ig_web_copy_link"))
-                {
-                    URL = txtUrl.Text.Replace("?utm_source=ig_web_copy_link", "?__a=1");
-
-                }
-                else
-                {
-
-                    URL = txtUrl.Text.Remove(40, 21) + "?__a=1";
-
-                }
-
+            
+           
+                URL = txtUrl.Text;
 
                 //Check Combo box File Type
 
                 btnCheck.Enabled = false;
                 txtUrl.Enabled = false;
-
                 comboboxLinkDownload.Items.Clear();
                 txtSaveLocation.Enabled = false;
                 comboboxLinkDownload.Enabled = false;
@@ -422,17 +413,12 @@ namespace Insta_Downloader
 
 
 
-            }
-            else
-            {
-                MessageBox.Show("Invalid URL", "URL", MessageBoxButtons.OK, MessageBoxIcon.Warning);
-
-            }
+            
 
         }
 
         //Get Info from the URL And Set to Property by GetInfo Method
-        public void GetInfo()
+        public async void GetInfo()
         {
             LinkDownloadSingleData = String.Empty;
             ListDownload.Clear();
@@ -441,47 +427,24 @@ namespace Insta_Downloader
             HttpClient client = new HttpClient(handler);
             client.BaseAddress = new Uri(URL);
 
-            //login
-            //RequestHeaders UserAgent 
-            string _UserAgent = "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/87.0.4280.88 Safari/537.36";
-            client.DefaultRequestHeaders.Add("user-agent", _UserAgent);
-
-            //RequestHeaders Cookie  
-            string _Cookie = File.ReadAllText(startupPath2 + "\\Cookie.txt");
-            client.DefaultRequestHeaders.Add("cookie", _Cookie);
+           
 
             //try to connect and get information from the url
             try
             {
 
-                //Get Information From URL
-                HttpResponseMessage httpResponseMessage = client.GetAsync(URL).Result;
-                string result = httpResponseMessage.Content.ReadAsStringAsync().Result;
-                JsonDesereialaizeObjects = JsonConvert.DeserializeObject<Root>(result);
-
                 //set URLdownload to combo box link download
                 try
                 {
-                    if (JsonDesereialaizeObjects.graphql.shortcode_media.__typename == "GraphVideo")
+                    Uri uri = new Uri(URL);
+                    var mediaid = await InstaApi.MediaProcessor.GetMediaIdFromUrlAsync(uri);
+                    var media = await InstaApi.MediaProcessor.GetMediaByIdsAsync(mediaid.Value);
+                    //get link download as property IGTV
+                    if (media.Value[0].ProductType == "igtv")
                     {
-                        //get link download as property single display video
-                        LinkDownloadSingleData = JsonDesereialaizeObjects.graphql.shortcode_media.video_url;
-                        comboboxLinkDownload.Invoke(new Action(() => comboboxLinkDownload.Text = "This page has a slide"));
-                        txtSaveLocation.Invoke(new Action(() => txtSaveLocation.Enabled = true));
-                        btnBrowse.Invoke(new Action(() => btnBrowse.Enabled = true));
-                        btnCheck.Invoke(new Action(() => btnCheck.Enabled = true));
-                        txtUrl.Invoke(new Action(() => txtUrl.Enabled = true));
-                        lblStatus.Invoke(new Action(() => lblStatus.ForeColor = Color.DarkGreen));
-                        lblStatus.Invoke(new Action(() => lblStatus.Text = "Checking URL Complete"));
-
-
-
-                    }
-                    else if (JsonDesereialaizeObjects.graphql.shortcode_media.__typename == "GraphImage")
-                    {
-                        //get link download as property single display Image
-                        LinkDownloadSingleData = JsonDesereialaizeObjects.graphql.shortcode_media.display_url;
-                        comboboxLinkDownload.Invoke(new Action(() => comboboxLinkDownload.Text = "This page has a slide"));
+                        
+                        LinkDownloadSingleData = media.Value[0].Videos[0].Uri.ToString();
+                        comboboxLinkDownload.Invoke(new Action(() => comboboxLinkDownload.Text = "This page has a slide (one IGTV)"));
                         txtSaveLocation.Invoke(new Action(() => txtSaveLocation.Enabled = true));
                         btnBrowse.Invoke(new Action(() => btnBrowse.Enabled = true));
                         btnCheck.Invoke(new Action(() => btnCheck.Enabled = true));
@@ -491,27 +454,57 @@ namespace Insta_Downloader
 
                     }
 
-
-
-                    else if (JsonDesereialaizeObjects.graphql.shortcode_media.__typename == "GraphSidecar")
+                    //get link download as property single display video
+                    else if (media.Value[0].MediaType.ToString() == "Video")
                     {
-                        //get as property multi display picture
-                        Edges[] list = JsonDesereialaizeObjects.graphql.shortcode_media.edge_sidecar_to_children.edges.ToArray();
+                        
+                        LinkDownloadSingleData = media.Value[0].Videos[0].Uri.ToString();
+                        comboboxLinkDownload.Invoke(new Action(() => comboboxLinkDownload.Text = "This page has a slide (One Video)"));
+                        txtSaveLocation.Invoke(new Action(() => txtSaveLocation.Enabled = true));
+                        btnBrowse.Invoke(new Action(() => btnBrowse.Enabled = true));
+                        btnCheck.Invoke(new Action(() => btnCheck.Enabled = true));
+                        txtUrl.Invoke(new Action(() => txtUrl.Enabled = true));
+                        lblStatus.Invoke(new Action(() => lblStatus.ForeColor = Color.DarkGreen));
+                        lblStatus.Invoke(new Action(() => lblStatus.Text = "Checking URL Complete"));
 
-                        for (int i = 0; i < list.Length; i++)
+                    }
+
+                    //get link download as property single display Image
+                    else if (media.Value[0].MediaType.ToString() == "Image")
+                    {
+                        
+                        LinkDownloadSingleData = media.Value[0].Images[0].Uri.ToString();
+                        comboboxLinkDownload.Invoke(new Action(() => comboboxLinkDownload.Text = "This page has a slide (one Image)"));
+                        txtSaveLocation.Invoke(new Action(() => txtSaveLocation.Enabled = true));
+                        btnBrowse.Invoke(new Action(() => btnBrowse.Enabled = true));
+                        btnCheck.Invoke(new Action(() => btnCheck.Enabled = true));
+                        txtUrl.Invoke(new Action(() => txtUrl.Enabled = true));
+                        lblStatus.Invoke(new Action(() => lblStatus.ForeColor = Color.DarkGreen));
+                        lblStatus.Invoke(new Action(() => lblStatus.Text = "Checking URL Complete"));
+                        
+                    }
+
+
+                    //get as property multi display picture and Video
+                    else if (media.Value[0].MediaType.ToString() == "Carousel")
+                    {
+                        
+                        
+
+                        for (int i = 0; i < media.Value[0].Carousel.Count; i++)
                         {
 
 
-                            if (list[i].node.__typename == "GraphImage")
+                            if (media.Value[0].Carousel[i].MediaType.ToString() == "Image")
                             {
 
-                                ListDownload.Add(list[i].node.display_url);
+                                ListDownload.Add(media.Value[0].Carousel[i].Images[0].Uri.ToString());
                                 comboboxLinkDownload.Invoke(new Action(() => comboboxLinkDownload.Items.Add("Slide " + (i + 1) + " ( Image )")));
 
                             }
                             else
                             {
-                                ListDownload.Add(list[i].node.video_url);
+                                ListDownload.Add(media.Value[0].Carousel[i].Videos[i].Uri.ToString());
                                 comboboxLinkDownload.Invoke(new Action(() => comboboxLinkDownload.Items.Add("Slide " + (i + 1) + " ( Video )")));
 
                             }
@@ -523,7 +516,6 @@ namespace Insta_Downloader
                             btnCheck.Invoke(new Action(() => btnCheck.Enabled = true));
                             txtUrl.Invoke(new Action(() => txtUrl.Enabled = true));
                             lblStatus.Invoke(new Action(() => lblStatus.ForeColor = Color.DarkGreen));
-
                             lblStatus.Invoke(new Action(() => lblStatus.Text = "Checking URL Complete"));
 
 
@@ -567,13 +559,46 @@ namespace Insta_Downloader
 
         }
 
+        public async void login()
+        {
+            var userSession = new UserSessionData
+            {
+                UserName = UsernameText.Text,
+                Password = PasswordText.Text,
+            };
+            InstaApi = InstaApiBuilder.CreateBuilder()
+                .SetUser(userSession)
+                .UseLogger(new DebugLogger(LogLevel.All))
+                .Build();
+            var loginResult = await InstaApi.LoginAsync();
+            if (loginResult.Succeeded == true)
+            {
+                loginStatus.Text = "Succeess";
+                //Uri uri = new Uri(URL);
+               // var mediaid = await InstaApi.MediaProcessor.GetMediaIdFromUrlAsync(uri);
+                // var aa= await InstaApi.MediaProcessor.GetShareLinkFromMediaIdAsync(mediaid.Value);
+               // var media = await InstaApi.MediaProcessor.GetMediaByIdsAsync(mediaid.Value);
+
+            }
+
+        }
+
 
 
         #endregion
 
         #endregion
 
-        
+        private void button1_Click_1(object sender, EventArgs e)
+        {
+            login();
+        }
+
+        private void tabPageLogin_Click(object sender, EventArgs e)
+        {
+
+        }
     }
+    
 }
 

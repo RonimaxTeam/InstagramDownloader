@@ -9,6 +9,11 @@ using System.Threading.Tasks;
 using System.Windows.Forms;
 using System.IO;
 using System.Security.Permissions;
+using InstagramApiSharp.API;
+using InstagramApiSharp.API.Builder;
+using InstagramApiSharp.Classes.Models;
+using InstagramApiSharp.Classes;
+using InstagramApiSharp.Logger;
 namespace Insta_Downloader
 {
     public partial class FormLogin : Form
@@ -17,6 +22,7 @@ namespace Insta_Downloader
         #region Fields
         public string cookieData;
         string startupPath = System.IO.Path.GetDirectoryName(System.Reflection.Assembly.GetEntryAssembly().Location);
+        private static IInstaApi InstaApi;
         #endregion
 
 
@@ -92,6 +98,8 @@ namespace Insta_Downloader
 
         #region Methods
 
+        
+        
         private CookieRetrievalFlags GetFlags()
         {
             CookieRetrievalFlags flags;
@@ -103,10 +111,26 @@ namespace Insta_Downloader
             return flags;
         }
 
+
+
         #endregion
 
         #endregion
 
+        private void button1_Click(object sender, EventArgs e)
+        {
+            
+        }
 
+        private void UsernameText_TextChanged(object sender, EventArgs e)
+        {
+
+        }
+
+        private void PasswordText_TextChanged(object sender, EventArgs e)
+        {
+
+        }
     }
+    
 }

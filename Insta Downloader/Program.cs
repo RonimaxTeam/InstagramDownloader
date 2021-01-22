@@ -21,17 +21,10 @@ namespace Insta_Downloader
             string startupPath3 = System.IO.Path.GetDirectoryName(System.Reflection.Assembly.GetEntryAssembly().Location);
             Application.EnableVisualStyles();
             Application.SetCompatibleTextRenderingDefault(false);
+            Application.Run(new Form1());
+
 
             
-
-            if (!File.Exists(startupPath3 + "\\Cookie.txt"))
-            {
-                Application.Run(new HelpForm());
-            }
-            else
-            {
-                Application.Run(new Form1());
-            }
 
         }
         
