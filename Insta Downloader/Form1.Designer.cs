@@ -111,7 +111,7 @@ namespace Insta_Downloader
             this.panel1.Controls.Add(this.btnCheck);
             this.panel1.Location = new System.Drawing.Point(-1, 8);
             this.panel1.Name = "panel1";
-            this.panel1.Size = new System.Drawing.Size(547, 462);
+            this.panel1.Size = new System.Drawing.Size(552, 462);
             this.panel1.TabIndex = 36;
             // 
             // btnHelp
@@ -126,7 +126,7 @@ namespace Insta_Downloader
             this.btnHelp.ForeColor = System.Drawing.Color.Black;
             this.btnHelp.Location = new System.Drawing.Point(167, 362);
             this.btnHelp.Name = "btnHelp";
-            this.btnHelp.Size = new System.Drawing.Size(370, 55);
+            this.btnHelp.Size = new System.Drawing.Size(375, 55);
             this.btnHelp.TabIndex = 43;
             this.btnHelp.Text = "Help";
             this.btnHelp.UseVisualStyleBackColor = false;
@@ -137,7 +137,7 @@ namespace Insta_Downloader
             this.pictureBox2.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
             this.pictureBox2.BackgroundImage = global::Insta_Downloader.Properties.Resources.info;
             this.pictureBox2.Cursor = System.Windows.Forms.Cursors.Hand;
-            this.pictureBox2.Location = new System.Drawing.Point(511, 428);
+            this.pictureBox2.Location = new System.Drawing.Point(516, 428);
             this.pictureBox2.Name = "pictureBox2";
             this.pictureBox2.Size = new System.Drawing.Size(33, 32);
             this.pictureBox2.TabIndex = 42;
@@ -165,7 +165,7 @@ namespace Insta_Downloader
             this.panel6.Controls.Add(this.label7);
             this.panel6.Controls.Add(this.label6);
             this.panel6.Controls.Add(this.label5);
-            this.panel6.Location = new System.Drawing.Point(177, 416);
+            this.panel6.Location = new System.Drawing.Point(180, 416);
             this.panel6.Name = "panel6";
             this.panel6.Size = new System.Drawing.Size(289, 51);
             this.panel6.TabIndex = 39;
@@ -222,7 +222,7 @@ namespace Insta_Downloader
             this.panel5.Controls.Add(this.lblStatus);
             this.panel5.Location = new System.Drawing.Point(92, 104);
             this.panel5.Name = "panel5";
-            this.panel5.Size = new System.Drawing.Size(448, 26);
+            this.panel5.Size = new System.Drawing.Size(453, 26);
             this.panel5.TabIndex = 38;
             // 
             // lblStatus
@@ -232,7 +232,7 @@ namespace Insta_Downloader
             this.lblStatus.Font = new System.Drawing.Font("Segoe Script", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.lblStatus.Location = new System.Drawing.Point(-1, -1);
             this.lblStatus.Name = "lblStatus";
-            this.lblStatus.Size = new System.Drawing.Size(448, 26);
+            this.lblStatus.Size = new System.Drawing.Size(453, 26);
             this.lblStatus.TabIndex = 37;
             this.lblStatus.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
             // 
@@ -249,7 +249,7 @@ namespace Insta_Downloader
             this.panel3.Controls.Add(this.labelDownloaded);
             this.panel3.Location = new System.Drawing.Point(9, 144);
             this.panel3.Name = "panel3";
-            this.panel3.Size = new System.Drawing.Size(531, 99);
+            this.panel3.Size = new System.Drawing.Size(536, 99);
             this.panel3.TabIndex = 36;
             // 
             // labelSpeed
@@ -308,7 +308,7 @@ namespace Insta_Downloader
             this.btnStart.ForeColor = System.Drawing.Color.Black;
             this.btnStart.Location = new System.Drawing.Point(167, 293);
             this.btnStart.Name = "btnStart";
-            this.btnStart.Size = new System.Drawing.Size(370, 55);
+            this.btnStart.Size = new System.Drawing.Size(375, 55);
             this.btnStart.TabIndex = 0;
             this.btnStart.Text = "Start Download";
             this.btnStart.UseVisualStyleBackColor = false;
@@ -324,7 +324,7 @@ namespace Insta_Downloader
             this.txtUrl.Name = "txtUrl";
             this.txtUrl.RightToLeft = System.Windows.Forms.RightToLeft.No;
             this.txtUrl.ScrollBars = System.Windows.Forms.ScrollBars.Vertical;
-            this.txtUrl.Size = new System.Drawing.Size(369, 26);
+            this.txtUrl.Size = new System.Drawing.Size(374, 26);
             this.txtUrl.TabIndex = 1;
             // 
             // label1
@@ -361,7 +361,7 @@ namespace Insta_Downloader
             this.txtSaveLocation.Location = new System.Drawing.Point(92, 72);
             this.txtSaveLocation.Multiline = true;
             this.txtSaveLocation.Name = "txtSaveLocation";
-            this.txtSaveLocation.Size = new System.Drawing.Size(415, 21);
+            this.txtSaveLocation.Size = new System.Drawing.Size(420, 21);
             this.txtSaveLocation.TabIndex = 3;
             // 
             // label2
@@ -382,7 +382,7 @@ namespace Insta_Downloader
             this.btnBrowse.FlatStyle = System.Windows.Forms.FlatStyle.System;
             this.btnBrowse.Font = new System.Drawing.Font("Footlight MT Light", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.btnBrowse.ForeColor = System.Drawing.SystemColors.ActiveCaptionText;
-            this.btnBrowse.Location = new System.Drawing.Point(513, 68);
+            this.btnBrowse.Location = new System.Drawing.Point(518, 68);
             this.btnBrowse.Name = "btnBrowse";
             this.btnBrowse.Size = new System.Drawing.Size(27, 29);
             this.btnBrowse.TabIndex = 6;
@@ -396,7 +396,7 @@ namespace Insta_Downloader
             | System.Windows.Forms.AnchorStyles.Right)));
             this.progressBar1.Location = new System.Drawing.Point(9, 256);
             this.progressBar1.Name = "progressBar1";
-            this.progressBar1.Size = new System.Drawing.Size(498, 20);
+            this.progressBar1.Size = new System.Drawing.Size(503, 20);
             this.progressBar1.TabIndex = 7;
             // 
             // label4
@@ -428,7 +428,7 @@ namespace Insta_Downloader
             this.comboboxLinkDownload.FormattingEnabled = true;
             this.comboboxLinkDownload.Location = new System.Drawing.Point(92, 37);
             this.comboboxLinkDownload.Name = "comboboxLinkDownload";
-            this.comboboxLinkDownload.Size = new System.Drawing.Size(448, 24);
+            this.comboboxLinkDownload.Size = new System.Drawing.Size(453, 24);
             this.comboboxLinkDownload.TabIndex = 21;
             // 
             // labelPerc
@@ -437,7 +437,7 @@ namespace Insta_Downloader
             this.labelPerc.AutoSize = true;
             this.labelPerc.BackColor = System.Drawing.Color.Transparent;
             this.labelPerc.Font = new System.Drawing.Font("Goudy Old Style", 9.75F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.labelPerc.Location = new System.Drawing.Point(513, 257);
+            this.labelPerc.Location = new System.Drawing.Point(518, 257);
             this.labelPerc.Name = "labelPerc";
             this.labelPerc.Size = new System.Drawing.Size(0, 17);
             this.labelPerc.TabIndex = 11;
@@ -450,7 +450,7 @@ namespace Insta_Downloader
             this.btnCheck.FlatStyle = System.Windows.Forms.FlatStyle.System;
             this.btnCheck.Font = new System.Drawing.Font("Footlight MT Light", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.btnCheck.ForeColor = System.Drawing.SystemColors.ActiveCaptionText;
-            this.btnCheck.Location = new System.Drawing.Point(465, 3);
+            this.btnCheck.Location = new System.Drawing.Point(470, 3);
             this.btnCheck.Name = "btnCheck";
             this.btnCheck.Size = new System.Drawing.Size(75, 26);
             this.btnCheck.TabIndex = 20;
@@ -463,13 +463,12 @@ namespace Insta_Downloader
             this.tabControl1.Controls.Add(this.tabPageDownloader);
             this.tabControl1.Controls.Add(this.tabPageLogin);
             this.tabControl1.Font = new System.Drawing.Font("Sitka Text", 8.25F);
-            this.tabControl1.Location = new System.Drawing.Point(6, 5);
+            this.tabControl1.Location = new System.Drawing.Point(6, 3);
             this.tabControl1.Name = "tabControl1";
             this.tabControl1.SelectedIndex = 0;
             this.tabControl1.Size = new System.Drawing.Size(559, 501);
             this.tabControl1.TabIndex = 38;
             
-            this.tabControl1.MouseEnter += new System.EventHandler(this.tabControl1_MouseEnter);
             // 
             // tabPageDownloader
             // 
@@ -602,7 +601,6 @@ namespace Insta_Downloader
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.BackColor = System.Drawing.Color.Gainsboro;
-            this.BackgroundImage = ((System.Drawing.Image)(resources.GetObject("$this.BackgroundImage")));
             this.ClientSize = new System.Drawing.Size(572, 514);
             this.Controls.Add(this.tabControl1);
             this.Icon = ((System.Drawing.Icon)(resources.GetObject("$this.Icon")));
