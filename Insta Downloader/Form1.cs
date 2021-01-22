@@ -296,7 +296,6 @@ namespace Insta_Downloader
         private void StartDownload()
         {
 
-
             //check the type of data and pass link download to downloader method
             if (!string.IsNullOrEmpty(LinkDownloadSingleData))
             {
@@ -312,11 +311,6 @@ namespace Insta_Downloader
 
             }
 
-
-
-
-
-
         }
 
         //Button Stop Download Method
@@ -327,7 +321,6 @@ namespace Insta_Downloader
             {
                 webClient.CancelAsync();
             }
-
 
             lblStatus.ForeColor = Color.Red;
             lblStatus.Text = "Stop";
