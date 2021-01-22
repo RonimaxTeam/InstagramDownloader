@@ -64,10 +64,10 @@ namespace Insta_Downloader
             this.tabControl1 = new System.Windows.Forms.TabControl();
             this.tabPageDownloader = new System.Windows.Forms.TabPage();
             this.tabPageLogin = new System.Windows.Forms.TabPage();
+            this.loginStatus = new System.Windows.Forms.Label();
             this.button1 = new System.Windows.Forms.Button();
             this.PasswordText = new System.Windows.Forms.TextBox();
             this.UsernameText = new System.Windows.Forms.TextBox();
-            this.loginStatus = new System.Windows.Forms.Label();
             this.panel1.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox2)).BeginInit();
             this.panel6.SuspendLayout();
@@ -102,7 +102,7 @@ namespace Insta_Downloader
             this.panel1.Controls.Add(this.comboboxLinkDownload);
             this.panel1.Controls.Add(this.labelPerc);
             this.panel1.Controls.Add(this.btnCheck);
-            this.panel1.Location = new System.Drawing.Point(9, 5);
+            this.panel1.Location = new System.Drawing.Point(9, 4);
             this.panel1.Name = "panel1";
             this.panel1.Size = new System.Drawing.Size(534, 451);
             this.panel1.TabIndex = 36;
@@ -421,7 +421,7 @@ namespace Insta_Downloader
             this.comboboxLinkDownload.FormattingEnabled = true;
             this.comboboxLinkDownload.Location = new System.Drawing.Point(92, 37);
             this.comboboxLinkDownload.Name = "comboboxLinkDownload";
-            this.comboboxLinkDownload.Size = new System.Drawing.Size(435, 21);
+            this.comboboxLinkDownload.Size = new System.Drawing.Size(435, 24);
             this.comboboxLinkDownload.TabIndex = 21;
             // 
             // labelPerc
@@ -455,6 +455,7 @@ namespace Insta_Downloader
             // 
             this.tabControl1.Controls.Add(this.tabPageDownloader);
             this.tabControl1.Controls.Add(this.tabPageLogin);
+            this.tabControl1.Font = new System.Drawing.Font("Sitka Text", 8.25F);
             this.tabControl1.Location = new System.Drawing.Point(6, 5);
             this.tabControl1.Name = "tabControl1";
             this.tabControl1.SelectedIndex = 0;
@@ -464,10 +465,10 @@ namespace Insta_Downloader
             // tabPageDownloader
             // 
             this.tabPageDownloader.Controls.Add(this.panel1);
-            this.tabPageDownloader.Location = new System.Drawing.Point(4, 22);
+            this.tabPageDownloader.Location = new System.Drawing.Point(4, 25);
             this.tabPageDownloader.Name = "tabPageDownloader";
             this.tabPageDownloader.Padding = new System.Windows.Forms.Padding(3);
-            this.tabPageDownloader.Size = new System.Drawing.Size(551, 475);
+            this.tabPageDownloader.Size = new System.Drawing.Size(551, 472);
             this.tabPageDownloader.TabIndex = 0;
             this.tabPageDownloader.Text = "Downloader";
             this.tabPageDownloader.UseVisualStyleBackColor = true;
@@ -478,22 +479,30 @@ namespace Insta_Downloader
             this.tabPageLogin.Controls.Add(this.button1);
             this.tabPageLogin.Controls.Add(this.PasswordText);
             this.tabPageLogin.Controls.Add(this.UsernameText);
-            this.tabPageLogin.Location = new System.Drawing.Point(4, 22);
+            this.tabPageLogin.Location = new System.Drawing.Point(4, 25);
             this.tabPageLogin.Name = "tabPageLogin";
             this.tabPageLogin.Padding = new System.Windows.Forms.Padding(3);
-            this.tabPageLogin.Size = new System.Drawing.Size(551, 475);
+            this.tabPageLogin.Size = new System.Drawing.Size(551, 472);
             this.tabPageLogin.TabIndex = 1;
             this.tabPageLogin.Text = "Login";
             this.tabPageLogin.UseVisualStyleBackColor = true;
-            this.tabPageLogin.Click += new System.EventHandler(this.tabPageLogin_Click);
+            // 
+            // loginStatus
+            // 
+            this.loginStatus.AutoSize = true;
+            this.loginStatus.Location = new System.Drawing.Point(54, 287);
+            this.loginStatus.Name = "loginStatus";
+            this.loginStatus.Size = new System.Drawing.Size(0, 16);
+            this.loginStatus.TabIndex = 20;
             // 
             // button1
             // 
+            this.button1.Font = new System.Drawing.Font("Footlight MT Light", 12F);
             this.button1.Location = new System.Drawing.Point(258, 278);
             this.button1.Name = "button1";
-            this.button1.Size = new System.Drawing.Size(75, 23);
+            this.button1.Size = new System.Drawing.Size(75, 25);
             this.button1.TabIndex = 19;
-            this.button1.Text = "button1";
+            this.button1.Text = "Login";
             this.button1.UseVisualStyleBackColor = true;
             this.button1.Click += new System.EventHandler(this.button1_Click_1);
             // 
@@ -501,23 +510,17 @@ namespace Insta_Downloader
             // 
             this.PasswordText.Location = new System.Drawing.Point(218, 216);
             this.PasswordText.Name = "PasswordText";
-            this.PasswordText.Size = new System.Drawing.Size(100, 20);
+            this.PasswordText.PasswordChar = '*';
+            this.PasswordText.Size = new System.Drawing.Size(100, 21);
             this.PasswordText.TabIndex = 18;
+            
             // 
             // UsernameText
             // 
             this.UsernameText.Location = new System.Drawing.Point(218, 174);
             this.UsernameText.Name = "UsernameText";
-            this.UsernameText.Size = new System.Drawing.Size(100, 20);
+            this.UsernameText.Size = new System.Drawing.Size(100, 21);
             this.UsernameText.TabIndex = 17;
-            // 
-            // loginStatus
-            // 
-            this.loginStatus.AutoSize = true;
-            this.loginStatus.Location = new System.Drawing.Point(54, 287);
-            this.loginStatus.Name = "loginStatus";
-            this.loginStatus.Size = new System.Drawing.Size(0, 13);
-            this.loginStatus.TabIndex = 20;
             // 
             // Form1
             // 

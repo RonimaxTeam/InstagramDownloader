@@ -89,6 +89,13 @@ namespace Insta_Downloader
         #endregion
 
         #region Click Events
+
+        //Button Login Click Event
+        private void button1_Click_1(object sender, EventArgs e)
+        {
+            loginInsta();
+        }
+
         //Picture box Insta Click Event
         private void pictureBox1_Click(object sender, EventArgs e)
         {
@@ -399,11 +406,13 @@ namespace Insta_Downloader
                 progressBar1.Value = 0;
                 thread = new Thread(new ThreadStart(GetInfo));
                 thread.Start();
-
+                
 
             }
-
-            
+            else
+            {
+                MessageBox.Show("Invalid URL", "URL", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+            }
 
         }
 
@@ -549,7 +558,7 @@ namespace Insta_Downloader
 
         }
 
-        public async void login()
+        public async void loginInsta()
         {
             var userSession = new UserSessionData
             {
@@ -564,30 +573,18 @@ namespace Insta_Downloader
             if (loginResult.Succeeded == true)
             {
                 loginStatus.Text = "Succeess";
-                //Uri uri = new Uri(URL);
-               // var mediaid = await InstaApi.MediaProcessor.GetMediaIdFromUrlAsync(uri);
-                // var aa= await InstaApi.MediaProcessor.GetShareLinkFromMediaIdAsync(mediaid.Value);
-               // var media = await InstaApi.MediaProcessor.GetMediaByIdsAsync(mediaid.Value);
-
             }
 
         }
-
+       
 
 
         #endregion
 
         #endregion
 
-        private void button1_Click_1(object sender, EventArgs e)
-        {
-            login();
-        }
 
-        private void tabPageLogin_Click(object sender, EventArgs e)
-        {
-
-        }
+        
     }
     
 }
