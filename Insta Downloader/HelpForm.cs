@@ -25,24 +25,21 @@ namespace Insta_Downloader
         public HelpForm()
         {
             InitializeComponent();
-
             Image Introduction = new Bitmap(Insta_Downloader.Properties.Resources.Introduction);
-            Image Cookie = new Bitmap(Insta_Downloader.Properties.Resources.Cookie);
-            Image Login = new Bitmap(Insta_Downloader.Properties.Resources.HelpLogin);
-            Image Amoozeshedownloader = new Bitmap(Insta_Downloader.Properties.Resources.Amoozeshe_downloader);
+            
+            
+            Image Amoozeshedownloader = new Bitmap(Insta_Downloader.Properties.Resources.downloader_helper);
             Image Welcome = new Bitmap(Insta_Downloader.Properties.Resources.Welcome);
 
             pictureBoxPrevious.Enabled = false;
             images.Add(Introduction);
-            images.Add(Cookie);
-            images.Add(Login);
             images.Add(Amoozeshedownloader);
             images.Add(Welcome);
             pictureBoxHelp.Image = images[0];
         }
 
         #endregion
-        
+
         #region Events and Methods
 
         #region Events
@@ -51,6 +48,7 @@ namespace Insta_Downloader
         private void HelpForm_Load(object sender, EventArgs e)
         {
             this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.FixedSingle;
+
         }
 
         #endregion
@@ -59,37 +57,30 @@ namespace Insta_Downloader
         private void pictureBoxNext_Click(object sender, EventArgs e)
         {
 
+
             if (pictureBoxHelp.Image == images[0])
             {
                 pictureBoxPrevious.Enabled = true;
                 pictureBoxHelp.Image = images[1];
             }
-            else if(pictureBoxHelp.Image == images[1])
+            else if (pictureBoxHelp.Image == images[1])
             {
                 pictureBoxPrevious.Enabled = true;
                 pictureBoxHelp.Image = images[2];
             }
-            else if (pictureBoxHelp.Image == images[2])
-            {
-                pictureBoxPrevious.Enabled = true;
-                pictureBoxHelp.Image = images[3];
-            }
-            else if (pictureBoxHelp.Image == images[3])
-            {
-                pictureBoxPrevious.Enabled = true;
-                pictureBoxHelp.Image = images[4];
-            }
             else
-            {
+            {      
                 this.Hide();
-                FormLogin formLogin = new FormLogin();
-                formLogin.ShowDialog();
             }
-            
-                  
+
+
+
+
+
         }
         private void pictureBoxPrevious_Click(object sender, EventArgs e)
         {
+
 
             if (pictureBoxHelp.Image == images[1])
             {
@@ -100,14 +91,7 @@ namespace Insta_Downloader
             {
                 pictureBoxHelp.Image = images[1];
             }
-            else if (pictureBoxHelp.Image == images[3])
-            {
-                pictureBoxHelp.Image = images[2];
-            }
-            else if (pictureBoxHelp.Image == images[4])
-            {
-                pictureBoxHelp.Image = images[3];
-            }
+            
 
         }
 
@@ -146,6 +130,6 @@ namespace Insta_Downloader
 
         #endregion
 
-        
+
     }
 }

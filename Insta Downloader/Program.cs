@@ -18,13 +18,10 @@ namespace Insta_Downloader
         [STAThread]
         static void Main()
         {
-            string startupPath3 = System.IO.Path.GetDirectoryName(System.Reflection.Assembly.GetEntryAssembly().Location);
+
             Application.EnableVisualStyles();
             Application.SetCompatibleTextRenderingDefault(false);
             Application.Run(new Form1());
-
-
-            
 
         }
         

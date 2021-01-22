@@ -103,6 +103,16 @@ namespace Insta_Downloader.Properties {
         /// <summary>
         ///   Looks up a localized resource of type System.Drawing.Bitmap.
         /// </summary>
+        internal static System.Drawing.Bitmap downloader_helper {
+            get {
+                object obj = ResourceManager.GetObject("downloader_helper", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized resource of type System.Drawing.Bitmap.
+        /// </summary>
         internal static System.Drawing.Bitmap HelpLogin {
             get {
                 object obj = ResourceManager.GetObject("HelpLogin", resourceCulture);
@@ -176,6 +186,16 @@ namespace Insta_Downloader.Properties {
         internal static System.Drawing.Bitmap Right1 {
             get {
                 object obj = ResourceManager.GetObject("Right1", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized resource of type System.Drawing.Bitmap.
+        /// </summary>
+        internal static System.Drawing.Bitmap TabLogin {
+            get {
+                object obj = ResourceManager.GetObject("TabLogin", resourceCulture);
                 return ((System.Drawing.Bitmap)(obj));
             }
         }
