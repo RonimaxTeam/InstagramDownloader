@@ -33,9 +33,9 @@ namespace Insta_Downloader
             this.folderBrowserDialog = new System.Windows.Forms.FolderBrowserDialog();
             this.saveFileDialog = new System.Windows.Forms.SaveFileDialog();
             this.panel1 = new System.Windows.Forms.Panel();
+            this.btnHelp = new System.Windows.Forms.Button();
             this.pictureBox2 = new System.Windows.Forms.PictureBox();
             this.label9 = new System.Windows.Forms.Label();
-            this.btnLogOut = new System.Windows.Forms.Button();
             this.panel6 = new System.Windows.Forms.Panel();
             this.label8 = new System.Windows.Forms.Label();
             this.label7 = new System.Windows.Forms.Label();
@@ -61,12 +61,27 @@ namespace Insta_Downloader
             this.comboboxLinkDownload = new System.Windows.Forms.ComboBox();
             this.labelPerc = new System.Windows.Forms.Label();
             this.btnCheck = new System.Windows.Forms.Button();
+            this.tabControl1 = new System.Windows.Forms.TabControl();
+            this.tabPageDownloader = new System.Windows.Forms.TabPage();
+            this.tabPageLogin = new System.Windows.Forms.TabPage();
+            this.loginStatus = new System.Windows.Forms.Label();
+            this.btnLogout = new System.Windows.Forms.Button();
+            this.checkBoxRemember = new System.Windows.Forms.CheckBox();
+            this.label12 = new System.Windows.Forms.Label();
+            this.label11 = new System.Windows.Forms.Label();
+            this.label10 = new System.Windows.Forms.Label();
+            this.btnLogin = new System.Windows.Forms.Button();
+            this.PasswordText = new System.Windows.Forms.TextBox();
+            this.UsernameText = new System.Windows.Forms.TextBox();
             this.panel1.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox2)).BeginInit();
             this.panel6.SuspendLayout();
             this.panel5.SuspendLayout();
             this.panel3.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.pictureBoxInsta)).BeginInit();
+            this.tabControl1.SuspendLayout();
+            this.tabPageDownloader.SuspendLayout();
+            this.tabPageLogin.SuspendLayout();
             this.SuspendLayout();
             // 
             // panel1
@@ -75,9 +90,9 @@ namespace Insta_Downloader
             | System.Windows.Forms.AnchorStyles.Left) 
             | System.Windows.Forms.AnchorStyles.Right)));
             this.panel1.BackColor = System.Drawing.Color.White;
+            this.panel1.Controls.Add(this.btnHelp);
             this.panel1.Controls.Add(this.pictureBox2);
             this.panel1.Controls.Add(this.label9);
-            this.panel1.Controls.Add(this.btnLogOut);
             this.panel1.Controls.Add(this.panel6);
             this.panel1.Controls.Add(this.panel5);
             this.panel1.Controls.Add(this.panel3);
@@ -94,17 +109,35 @@ namespace Insta_Downloader
             this.panel1.Controls.Add(this.comboboxLinkDownload);
             this.panel1.Controls.Add(this.labelPerc);
             this.panel1.Controls.Add(this.btnCheck);
-            this.panel1.Location = new System.Drawing.Point(9, 11);
+            this.panel1.Location = new System.Drawing.Point(-1, 8);
             this.panel1.Name = "panel1";
-            this.panel1.Size = new System.Drawing.Size(534, 458);
+            this.panel1.Size = new System.Drawing.Size(552, 462);
             this.panel1.TabIndex = 36;
+            // 
+            // btnHelp
+            // 
+            this.btnHelp.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left) 
+            | System.Windows.Forms.AnchorStyles.Right)));
+            this.btnHelp.BackColor = System.Drawing.SystemColors.InactiveCaption;
+            this.btnHelp.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Center;
+            this.btnHelp.Cursor = System.Windows.Forms.Cursors.Hand;
+            this.btnHelp.FlatStyle = System.Windows.Forms.FlatStyle.System;
+            this.btnHelp.Font = new System.Drawing.Font("Footlight MT Light", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.btnHelp.ForeColor = System.Drawing.Color.Black;
+            this.btnHelp.Location = new System.Drawing.Point(167, 362);
+            this.btnHelp.Name = "btnHelp";
+            this.btnHelp.Size = new System.Drawing.Size(375, 55);
+            this.btnHelp.TabIndex = 43;
+            this.btnHelp.Text = "Help";
+            this.btnHelp.UseVisualStyleBackColor = false;
+            this.btnHelp.Click += new System.EventHandler(this.btnHelp_Click);
             // 
             // pictureBox2
             // 
             this.pictureBox2.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
             this.pictureBox2.BackgroundImage = global::Insta_Downloader.Properties.Resources.info;
             this.pictureBox2.Cursor = System.Windows.Forms.Cursors.Hand;
-            this.pictureBox2.Location = new System.Drawing.Point(498, 424);
+            this.pictureBox2.Location = new System.Drawing.Point(516, 428);
             this.pictureBox2.Name = "pictureBox2";
             this.pictureBox2.Size = new System.Drawing.Size(33, 32);
             this.pictureBox2.TabIndex = 42;
@@ -119,29 +152,11 @@ namespace Insta_Downloader
             this.label9.AutoSize = true;
             this.label9.BackColor = System.Drawing.Color.Transparent;
             this.label9.Font = new System.Drawing.Font("Sitka Text", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.label9.Location = new System.Drawing.Point(51, 437);
+            this.label9.Location = new System.Drawing.Point(51, 441);
             this.label9.Name = "label9";
             this.label9.Size = new System.Drawing.Size(66, 16);
             this.label9.TabIndex = 41;
             this.label9.Text = "Version 1.0";
-            // 
-            // btnLogOut
-            // 
-            this.btnLogOut.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left) 
-            | System.Windows.Forms.AnchorStyles.Right)));
-            this.btnLogOut.BackColor = System.Drawing.SystemColors.InactiveCaption;
-            this.btnLogOut.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Center;
-            this.btnLogOut.Cursor = System.Windows.Forms.Cursors.Hand;
-            this.btnLogOut.FlatStyle = System.Windows.Forms.FlatStyle.System;
-            this.btnLogOut.Font = new System.Drawing.Font("Footlight MT Light", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.btnLogOut.ForeColor = System.Drawing.Color.Black;
-            this.btnLogOut.Location = new System.Drawing.Point(167, 362);
-            this.btnLogOut.Name = "btnLogOut";
-            this.btnLogOut.Size = new System.Drawing.Size(357, 55);
-            this.btnLogOut.TabIndex = 40;
-            this.btnLogOut.Text = "Log Out";
-            this.btnLogOut.UseVisualStyleBackColor = false;
-            this.btnLogOut.Click += new System.EventHandler(this.btnLogOut_Click);
             // 
             // panel6
             // 
@@ -150,7 +165,7 @@ namespace Insta_Downloader
             this.panel6.Controls.Add(this.label7);
             this.panel6.Controls.Add(this.label6);
             this.panel6.Controls.Add(this.label5);
-            this.panel6.Location = new System.Drawing.Point(171, 412);
+            this.panel6.Location = new System.Drawing.Point(180, 416);
             this.panel6.Name = "panel6";
             this.panel6.Size = new System.Drawing.Size(289, 51);
             this.panel6.TabIndex = 39;
@@ -207,7 +222,7 @@ namespace Insta_Downloader
             this.panel5.Controls.Add(this.lblStatus);
             this.panel5.Location = new System.Drawing.Point(92, 104);
             this.panel5.Name = "panel5";
-            this.panel5.Size = new System.Drawing.Size(435, 26);
+            this.panel5.Size = new System.Drawing.Size(453, 26);
             this.panel5.TabIndex = 38;
             // 
             // lblStatus
@@ -217,7 +232,7 @@ namespace Insta_Downloader
             this.lblStatus.Font = new System.Drawing.Font("Segoe Script", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.lblStatus.Location = new System.Drawing.Point(-1, -1);
             this.lblStatus.Name = "lblStatus";
-            this.lblStatus.Size = new System.Drawing.Size(435, 26);
+            this.lblStatus.Size = new System.Drawing.Size(453, 26);
             this.lblStatus.TabIndex = 37;
             this.lblStatus.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
             // 
@@ -234,7 +249,7 @@ namespace Insta_Downloader
             this.panel3.Controls.Add(this.labelDownloaded);
             this.panel3.Location = new System.Drawing.Point(9, 144);
             this.panel3.Name = "panel3";
-            this.panel3.Size = new System.Drawing.Size(518, 95);
+            this.panel3.Size = new System.Drawing.Size(536, 99);
             this.panel3.TabIndex = 36;
             // 
             // labelSpeed
@@ -243,7 +258,7 @@ namespace Insta_Downloader
             this.labelSpeed.AutoSize = true;
             this.labelSpeed.BackColor = System.Drawing.Color.Transparent;
             this.labelSpeed.Font = new System.Drawing.Font("Goudy Old Style", 9F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.labelSpeed.Location = new System.Drawing.Point(134, 55);
+            this.labelSpeed.Location = new System.Drawing.Point(134, 59);
             this.labelSpeed.Name = "labelSpeed";
             this.labelSpeed.Size = new System.Drawing.Size(0, 16);
             this.labelSpeed.TabIndex = 26;
@@ -293,7 +308,7 @@ namespace Insta_Downloader
             this.btnStart.ForeColor = System.Drawing.Color.Black;
             this.btnStart.Location = new System.Drawing.Point(167, 293);
             this.btnStart.Name = "btnStart";
-            this.btnStart.Size = new System.Drawing.Size(357, 55);
+            this.btnStart.Size = new System.Drawing.Size(375, 55);
             this.btnStart.TabIndex = 0;
             this.btnStart.Text = "Start Download";
             this.btnStart.UseVisualStyleBackColor = false;
@@ -309,7 +324,7 @@ namespace Insta_Downloader
             this.txtUrl.Name = "txtUrl";
             this.txtUrl.RightToLeft = System.Windows.Forms.RightToLeft.No;
             this.txtUrl.ScrollBars = System.Windows.Forms.ScrollBars.Vertical;
-            this.txtUrl.Size = new System.Drawing.Size(356, 26);
+            this.txtUrl.Size = new System.Drawing.Size(374, 26);
             this.txtUrl.TabIndex = 1;
             // 
             // label1
@@ -327,7 +342,7 @@ namespace Insta_Downloader
             this.pictureBoxInsta.BackgroundImage = global::Insta_Downloader.Properties.Resources._1024px_Instagram_icon;
             this.pictureBoxInsta.Cursor = System.Windows.Forms.Cursors.Hand;
             this.pictureBoxInsta.ErrorImage = null;
-            this.pictureBoxInsta.Location = new System.Drawing.Point(10, 284);
+            this.pictureBoxInsta.Location = new System.Drawing.Point(8, 288);
             this.pictureBoxInsta.Name = "pictureBoxInsta";
             this.pictureBoxInsta.Size = new System.Drawing.Size(149, 149);
             this.pictureBoxInsta.TabIndex = 30;
@@ -346,7 +361,7 @@ namespace Insta_Downloader
             this.txtSaveLocation.Location = new System.Drawing.Point(92, 72);
             this.txtSaveLocation.Multiline = true;
             this.txtSaveLocation.Name = "txtSaveLocation";
-            this.txtSaveLocation.Size = new System.Drawing.Size(402, 21);
+            this.txtSaveLocation.Size = new System.Drawing.Size(420, 21);
             this.txtSaveLocation.TabIndex = 3;
             // 
             // label2
@@ -367,7 +382,7 @@ namespace Insta_Downloader
             this.btnBrowse.FlatStyle = System.Windows.Forms.FlatStyle.System;
             this.btnBrowse.Font = new System.Drawing.Font("Footlight MT Light", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.btnBrowse.ForeColor = System.Drawing.SystemColors.ActiveCaptionText;
-            this.btnBrowse.Location = new System.Drawing.Point(500, 68);
+            this.btnBrowse.Location = new System.Drawing.Point(518, 68);
             this.btnBrowse.Name = "btnBrowse";
             this.btnBrowse.Size = new System.Drawing.Size(27, 29);
             this.btnBrowse.TabIndex = 6;
@@ -379,9 +394,9 @@ namespace Insta_Downloader
             // 
             this.progressBar1.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left) 
             | System.Windows.Forms.AnchorStyles.Right)));
-            this.progressBar1.Location = new System.Drawing.Point(9, 252);
+            this.progressBar1.Location = new System.Drawing.Point(9, 256);
             this.progressBar1.Name = "progressBar1";
-            this.progressBar1.Size = new System.Drawing.Size(485, 20);
+            this.progressBar1.Size = new System.Drawing.Size(503, 20);
             this.progressBar1.TabIndex = 7;
             // 
             // label4
@@ -413,7 +428,7 @@ namespace Insta_Downloader
             this.comboboxLinkDownload.FormattingEnabled = true;
             this.comboboxLinkDownload.Location = new System.Drawing.Point(92, 37);
             this.comboboxLinkDownload.Name = "comboboxLinkDownload";
-            this.comboboxLinkDownload.Size = new System.Drawing.Size(435, 21);
+            this.comboboxLinkDownload.Size = new System.Drawing.Size(453, 24);
             this.comboboxLinkDownload.TabIndex = 21;
             // 
             // labelPerc
@@ -422,7 +437,7 @@ namespace Insta_Downloader
             this.labelPerc.AutoSize = true;
             this.labelPerc.BackColor = System.Drawing.Color.Transparent;
             this.labelPerc.Font = new System.Drawing.Font("Goudy Old Style", 9.75F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.labelPerc.Location = new System.Drawing.Point(497, 253);
+            this.labelPerc.Location = new System.Drawing.Point(518, 257);
             this.labelPerc.Name = "labelPerc";
             this.labelPerc.Size = new System.Drawing.Size(0, 17);
             this.labelPerc.TabIndex = 11;
@@ -435,7 +450,7 @@ namespace Insta_Downloader
             this.btnCheck.FlatStyle = System.Windows.Forms.FlatStyle.System;
             this.btnCheck.Font = new System.Drawing.Font("Footlight MT Light", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.btnCheck.ForeColor = System.Drawing.SystemColors.ActiveCaptionText;
-            this.btnCheck.Location = new System.Drawing.Point(452, 3);
+            this.btnCheck.Location = new System.Drawing.Point(470, 3);
             this.btnCheck.Name = "btnCheck";
             this.btnCheck.Size = new System.Drawing.Size(75, 26);
             this.btnCheck.TabIndex = 20;
@@ -443,14 +458,151 @@ namespace Insta_Downloader
             this.btnCheck.UseVisualStyleBackColor = false;
             this.btnCheck.Click += new System.EventHandler(this.btnCheck_Click);
             // 
+            // tabControl1
+            // 
+            this.tabControl1.Controls.Add(this.tabPageDownloader);
+            this.tabControl1.Controls.Add(this.tabPageLogin);
+            this.tabControl1.Font = new System.Drawing.Font("Sitka Text", 8.25F);
+            this.tabControl1.Location = new System.Drawing.Point(6, 3);
+            this.tabControl1.Name = "tabControl1";
+            this.tabControl1.SelectedIndex = 0;
+            this.tabControl1.Size = new System.Drawing.Size(559, 501);
+            this.tabControl1.TabIndex = 38;
+            
+            // 
+            // tabPageDownloader
+            // 
+            this.tabPageDownloader.Controls.Add(this.panel1);
+            this.tabPageDownloader.Font = new System.Drawing.Font("Sitka Text", 8.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.tabPageDownloader.Location = new System.Drawing.Point(4, 25);
+            this.tabPageDownloader.Name = "tabPageDownloader";
+            this.tabPageDownloader.Padding = new System.Windows.Forms.Padding(3);
+            this.tabPageDownloader.Size = new System.Drawing.Size(551, 472);
+            this.tabPageDownloader.TabIndex = 0;
+            this.tabPageDownloader.Text = "Downloader";
+            // 
+            // tabPageLogin
+            // 
+            this.tabPageLogin.BackgroundImage = global::Insta_Downloader.Properties.Resources.TabLogin;
+            this.tabPageLogin.Controls.Add(this.loginStatus);
+            this.tabPageLogin.Controls.Add(this.btnLogout);
+            this.tabPageLogin.Controls.Add(this.checkBoxRemember);
+            this.tabPageLogin.Controls.Add(this.label12);
+            this.tabPageLogin.Controls.Add(this.label11);
+            this.tabPageLogin.Controls.Add(this.label10);
+            this.tabPageLogin.Controls.Add(this.btnLogin);
+            this.tabPageLogin.Controls.Add(this.PasswordText);
+            this.tabPageLogin.Controls.Add(this.UsernameText);
+            this.tabPageLogin.Font = new System.Drawing.Font("Sitka Text", 8.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.tabPageLogin.Location = new System.Drawing.Point(4, 25);
+            this.tabPageLogin.Name = "tabPageLogin";
+            this.tabPageLogin.Padding = new System.Windows.Forms.Padding(3);
+            this.tabPageLogin.Size = new System.Drawing.Size(551, 472);
+            this.tabPageLogin.TabIndex = 1;
+            this.tabPageLogin.Text = "  Login";
+            // 
+            // loginStatus
+            // 
+            this.loginStatus.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
+            | System.Windows.Forms.AnchorStyles.Right)));
+            this.loginStatus.BackColor = System.Drawing.Color.White;
+            this.loginStatus.Font = new System.Drawing.Font("Segoe Script", 11.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.loginStatus.Location = new System.Drawing.Point(158, 423);
+            this.loginStatus.Name = "loginStatus";
+            this.loginStatus.Size = new System.Drawing.Size(245, 35);
+            this.loginStatus.TabIndex = 38;
+            this.loginStatus.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
+            // 
+            // btnLogout
+            // 
+            this.btnLogout.Font = new System.Drawing.Font("Footlight MT Light", 12F);
+            this.btnLogout.Location = new System.Drawing.Point(158, 356);
+            this.btnLogout.Name = "btnLogout";
+            this.btnLogout.Size = new System.Drawing.Size(239, 32);
+            this.btnLogout.TabIndex = 25;
+            this.btnLogout.Text = "Logout";
+            this.btnLogout.UseVisualStyleBackColor = true;
+            this.btnLogout.Click += new System.EventHandler(this.btnLogout_Click);
+            // 
+            // checkBoxRemember
+            // 
+            this.checkBoxRemember.AutoSize = true;
+            this.checkBoxRemember.BackColor = System.Drawing.Color.Transparent;
+            this.checkBoxRemember.Location = new System.Drawing.Point(197, 396);
+            this.checkBoxRemember.Name = "checkBoxRemember";
+            this.checkBoxRemember.Size = new System.Drawing.Size(166, 20);
+            this.checkBoxRemember.TabIndex = 24;
+            this.checkBoxRemember.Text = "Remember this account...";
+            this.checkBoxRemember.UseVisualStyleBackColor = false;
+            // 
+            // label12
+            // 
+            this.label12.AutoSize = true;
+            this.label12.BackColor = System.Drawing.Color.Transparent;
+            this.label12.Font = new System.Drawing.Font("Sitka Text", 12F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.label12.ForeColor = System.Drawing.Color.Black;
+            this.label12.Location = new System.Drawing.Point(85, 427);
+            this.label12.Name = "label12";
+            this.label12.Size = new System.Drawing.Size(72, 23);
+            this.label12.TabIndex = 23;
+            this.label12.Text = "Status :";
+            // 
+            // label11
+            // 
+            this.label11.AutoSize = true;
+            this.label11.BackColor = System.Drawing.Color.Transparent;
+            this.label11.Font = new System.Drawing.Font("Sitka Text", 9.749999F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.label11.Location = new System.Drawing.Point(81, 280);
+            this.label11.Name = "label11";
+            this.label11.Size = new System.Drawing.Size(71, 19);
+            this.label11.TabIndex = 22;
+            this.label11.Text = "Password";
+            // 
+            // label10
+            // 
+            this.label10.BackColor = System.Drawing.Color.Transparent;
+            this.label10.Font = new System.Drawing.Font("Sitka Text", 9.749999F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.label10.Location = new System.Drawing.Point(85, 240);
+            this.label10.Name = "label10";
+            this.label10.Size = new System.Drawing.Size(47, 19);
+            this.label10.TabIndex = 21;
+            this.label10.Text = "Email";
+            // 
+            // btnLogin
+            // 
+            this.btnLogin.Font = new System.Drawing.Font("Footlight MT Light", 12F);
+            this.btnLogin.Location = new System.Drawing.Point(158, 317);
+            this.btnLogin.Name = "btnLogin";
+            this.btnLogin.Size = new System.Drawing.Size(239, 32);
+            this.btnLogin.TabIndex = 19;
+            this.btnLogin.Text = "Login";
+            this.btnLogin.UseVisualStyleBackColor = true;
+            this.btnLogin.Click += new System.EventHandler(this.button1_Click_1);
+            // 
+            // PasswordText
+            // 
+            this.PasswordText.Location = new System.Drawing.Point(158, 275);
+            this.PasswordText.Multiline = true;
+            this.PasswordText.Name = "PasswordText";
+            this.PasswordText.PasswordChar = '*';
+            this.PasswordText.Size = new System.Drawing.Size(239, 30);
+            this.PasswordText.TabIndex = 18;
+            // 
+            // UsernameText
+            // 
+            this.UsernameText.Location = new System.Drawing.Point(158, 236);
+            this.UsernameText.Multiline = true;
+            this.UsernameText.Name = "UsernameText";
+            this.UsernameText.Size = new System.Drawing.Size(239, 30);
+            this.UsernameText.TabIndex = 17;
+            // 
             // Form1
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.BackColor = System.Drawing.Color.Gainsboro;
-            this.BackgroundImage = ((System.Drawing.Image)(resources.GetObject("$this.BackgroundImage")));
-            this.ClientSize = new System.Drawing.Size(552, 479);
-            this.Controls.Add(this.panel1);
+            this.ClientSize = new System.Drawing.Size(572, 514);
+            this.Controls.Add(this.tabControl1);
             this.Icon = ((System.Drawing.Icon)(resources.GetObject("$this.Icon")));
             this.MaximizeBox = false;
             this.Name = "Form1";
@@ -467,6 +619,10 @@ namespace Insta_Downloader
             this.panel3.ResumeLayout(false);
             this.panel3.PerformLayout();
             ((System.ComponentModel.ISupportInitialize)(this.pictureBoxInsta)).EndInit();
+            this.tabControl1.ResumeLayout(false);
+            this.tabPageDownloader.ResumeLayout(false);
+            this.tabPageLogin.ResumeLayout(false);
+            this.tabPageLogin.PerformLayout();
             this.ResumeLayout(false);
 
         }
@@ -500,9 +656,21 @@ namespace Insta_Downloader
         private System.Windows.Forms.Label label7;
         private System.Windows.Forms.Label label6;
         private System.Windows.Forms.Label label5;
-        private System.Windows.Forms.Button btnLogOut;
         private System.Windows.Forms.Label label9;
         private System.Windows.Forms.PictureBox pictureBox2;
+        private System.Windows.Forms.TabControl tabControl1;
+        private System.Windows.Forms.TabPage tabPageDownloader;
+        private System.Windows.Forms.TabPage tabPageLogin;
+        private System.Windows.Forms.Button btnLogin;
+        private System.Windows.Forms.TextBox PasswordText;
+        private System.Windows.Forms.TextBox UsernameText;
+        private System.Windows.Forms.Label label12;
+        private System.Windows.Forms.Label label11;
+        private System.Windows.Forms.Label label10;
+        private System.Windows.Forms.CheckBox checkBoxRemember;
+        private System.Windows.Forms.Button btnHelp;
+        private System.Windows.Forms.Button btnLogout;
+        public System.Windows.Forms.Label loginStatus;
     }
 }
 

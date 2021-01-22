@@ -3,12 +3,14 @@ using System.Collections.Generic;
 using System.ComponentModel;
 using System.Drawing;
 using System.Windows.Forms;
-using System.Net.Http;
-using Newtonsoft.Json;
 using System.IO;
 using System.Threading;
 using System.Net;
 using System.Diagnostics;
+using InstagramApiSharp.API.Builder;
+using InstagramApiSharp.Classes;
+using InstagramApiSharp.Logger;
+using InstagramApiSharp.API;
 
 
 namespace Insta_Downloader
@@ -21,28 +23,28 @@ namespace Insta_Downloader
         WebClient webClient = new WebClient();
         Stopwatch stopWatch = new Stopwatch();
         static string URL;
-        static Form1 obj = new Form1();
-        Root JsonDesereialaizeObjects;
         string LinkDownloadSingleData;
         List<string> ListDownload = new List<string>();
-        string startupPath2 = System.IO.Path.GetDirectoryName(System.Reflection.Assembly.GetEntryAssembly().Location);
+        string startupPath2 = Path.GetDirectoryName(System.Reflection.Assembly.GetEntryAssembly().Location);
         Thread thread;
-        
+        private IInstaApi InstaApi;
+
+
         #endregion
 
         #region Constractor
 
         public Form1()
         {
-
             InitializeComponent();
+            btnLogout.Enabled = false;
+            rememberLogin();
             lblStatus.Text = "Stop";
             lblStatus.ForeColor = Color.Red;
             btnStart.Enabled = false;
             btnBrowse.Enabled = false;
             txtSaveLocation.Enabled = false;
             labelPerc.Text = "0" + " %";
-            TimerState.State = false;
             comboboxLinkDownload.Enabled = false;
 
 
@@ -60,7 +62,6 @@ namespace Insta_Downloader
         private void Form1_Load(object sender, EventArgs e)
         {
 
-            
         }
 
         #endregion
@@ -73,6 +74,7 @@ namespace Insta_Downloader
             Application.Exit();
         }
 
+
         #endregion
 
         #region Closing Form Event
@@ -84,14 +86,40 @@ namespace Insta_Downloader
         #endregion
 
         #region Click Events
+
+        //Button Logout Click Event
+        private void btnLogout_Click(object sender, EventArgs e)
+        {
+            
+            File.Delete(startupPath2 + "//user.txt");
+            File.Delete(startupPath2 + "//pass.txt");
+            btnLogout.Enabled = false;
+            loginStatus.Text = "Logout Successfuly";
+        }
+
+        //Button Help Click Event
+        private void btnHelp_Click(object sender, EventArgs e)
+        {
+            HelpForm helpForm = new HelpForm();
+            helpForm.ShowDialog();
+        }
+
+        //Button Login Click Event
+        private void button1_Click_1(object sender, EventArgs e)
+        {
+
+            loginInsta();
+
+        }
+
         //Picture box Insta Click Event
         private void pictureBox1_Click(object sender, EventArgs e)
         {
-            InstagramWeb instagramWeb = new InstagramWeb();
-            instagramWeb.Show();
-            
+
+            System.Diagnostics.Process.Start("https://instagram.com");
+
         }
-     
+
         //Picture box More Click Event
         private void pictureBox2_Click_1(object sender, EventArgs e)
         {
@@ -99,25 +127,8 @@ namespace Insta_Downloader
             more.Show();
         }
 
-        //Button Logout Click Event
-        private void btnLogOut_Click(object sender, EventArgs e)
-        {
-            
-           System.IO.File.Delete(startupPath2 + @"/Cookie.txt");
-            
 
-           System.Diagnostics.Process.Start("CMD.exe", "/C RunDll32.exe InetCpl.cpl,ClearMyTracksByProcess 2");
 
-            InstagramWeb instagramWeb = new InstagramWeb();
-            instagramWeb.Hide();
-
-            FormLogin formLogin = new FormLogin();
-            this.Hide();
-
-            TimerState.State = true;
-            formLogin.Show();
-
-        }
 
         //Button Start Download Click Event
         private void button1_Click(object sender, EventArgs e)
@@ -191,7 +202,7 @@ namespace Insta_Downloader
         #region Mouse Events
 
         //Picture Box More Events
-        
+
         private void pictureBox2_MouseEnter_1(object sender, EventArgs e)
         {
             pictureBox2.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
@@ -277,7 +288,7 @@ namespace Insta_Downloader
                 ListDownload.Clear();
                 comboboxLinkDownload.Items.Clear();
                 lblStatus.Text = "Download Complete";
-                
+
             }
         }
 
@@ -286,11 +297,10 @@ namespace Insta_Downloader
         #endregion
 
         #region Methods
-        
+
         //Button Start Download Method
         private void StartDownload()
         {
-
 
             //check the type of data and pass link download to downloader method
             if (!string.IsNullOrEmpty(LinkDownloadSingleData))
@@ -307,11 +317,6 @@ namespace Insta_Downloader
 
             }
 
-
-
-
-
-
         }
 
         //Button Stop Download Method
@@ -322,7 +327,6 @@ namespace Insta_Downloader
             {
                 webClient.CancelAsync();
             }
-
 
             lblStatus.ForeColor = Color.Red;
             lblStatus.Text = "Stop";
@@ -380,142 +384,128 @@ namespace Insta_Downloader
         {
 
             // Apply the rule on the URL
-            string patternUrl = "^(https://www.instagram.com/p/)";
-            System.Text.RegularExpressions.Regex expression = new System.Text.RegularExpressions.Regex(patternUrl);
-
+            string patternUrl1 = "^(https://www.instagram.com/p/)";
+            System.Text.RegularExpressions.Regex expression1 = new System.Text.RegularExpressions.Regex(patternUrl1);
+            string patternUrl2 = "^(https://www.instagram.com/tv/)";
+            System.Text.RegularExpressions.Regex expression2 = new System.Text.RegularExpressions.Regex(patternUrl2);
             //Check the input URL Structure
-            if (expression.IsMatch(txtUrl.Text))
+            if (expression1.IsMatch(txtUrl.Text) || expression2.IsMatch(txtUrl.Text))
             {
-                //FIX the Input URL structure
-                if (txtUrl.Text.Contains("?utm_source=ig_web_copy_link"))
-                {
-                    URL = txtUrl.Text.Replace("?utm_source=ig_web_copy_link", "?__a=1");
-
-                }
-                else
-                {
-
-                    URL = txtUrl.Text.Remove(40, 21) + "?__a=1";
-
-                }
-
-
-                //Check Combo box File Type
-
-                btnCheck.Enabled = false;
-                txtUrl.Enabled = false;
-
-                comboboxLinkDownload.Items.Clear();
-                txtSaveLocation.Enabled = false;
-                comboboxLinkDownload.Enabled = false;
-                comboboxLinkDownload.Text = String.Empty;
-                btnBrowse.Enabled = false;
-                txtSaveLocation.Text = String.Empty;
-                lblStatus.ForeColor = Color.DarkOrange;
-                lblStatus.Text = "Checking URL";
-                progressBar1.Value = 0;
-
 
                 thread = new Thread(new ThreadStart(GetInfo));
                 thread.Start();
-
-
 
 
             }
             else
             {
                 MessageBox.Show("Invalid URL", "URL", MessageBoxButtons.OK, MessageBoxIcon.Warning);
-
             }
 
         }
 
         //Get Info from the URL And Set to Property by GetInfo Method
-        public void GetInfo()
+        public async void GetInfo()
         {
             LinkDownloadSingleData = String.Empty;
             ListDownload.Clear();
 
-            HttpClientHandler handler = new HttpClientHandler() { UseCookies = false };
-            HttpClient client = new HttpClient(handler);
-            client.BaseAddress = new Uri(URL);
-
-            //login
-            //RequestHeaders UserAgent 
-            string _UserAgent = "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/87.0.4280.88 Safari/537.36";
-            client.DefaultRequestHeaders.Add("user-agent", _UserAgent);
-
-            //RequestHeaders Cookie  
-            string _Cookie = File.ReadAllText(startupPath2 + "\\Cookie.txt");
-            client.DefaultRequestHeaders.Add("cookie", _Cookie);
-
             //try to connect and get information from the url
             try
             {
-
-                //Get Information From URL
-                HttpResponseMessage httpResponseMessage = client.GetAsync(URL).Result;
-                string result = httpResponseMessage.Content.ReadAsStringAsync().Result;
-                JsonDesereialaizeObjects = JsonConvert.DeserializeObject<Root>(result);
-
-                //set URLdownload to combo box link download
-                try
+                if (loginStatus.Text == "Succeess")
                 {
-                    if (JsonDesereialaizeObjects.graphql.shortcode_media.__typename == "GraphVideo")
+                    //detail of design
+                    URL = txtUrl.Text;
+                    btnBrowse.Invoke(new Action(() => btnCheck.Enabled = false));
+                    btnBrowse.Invoke(new Action(() => txtUrl.Enabled = false));
+                    btnBrowse.Invoke(new Action(() => comboboxLinkDownload.Items.Clear()));
+                    btnBrowse.Invoke(new Action(() => txtSaveLocation.Enabled = false));
+                    btnBrowse.Invoke(new Action(() => comboboxLinkDownload.Enabled = false));
+                    btnBrowse.Invoke(new Action(() => comboboxLinkDownload.Text = String.Empty));
+                    btnBrowse.Invoke(new Action(() => btnBrowse.Enabled = false));
+                    btnBrowse.Invoke(new Action(() => txtSaveLocation.Text = String.Empty));
+                    btnBrowse.Invoke(new Action(() => lblStatus.ForeColor = Color.DarkOrange));
+                    btnBrowse.Invoke(new Action(() => lblStatus.Text = "Checking URL"));
+                    btnBrowse.Invoke(new Action(() => progressBar1.Value = 0));
+
+                    //set URLdownload to combo box link download
+                    try
                     {
+                        Uri uri = new Uri(URL);
+                        var mediaid = await InstaApi.MediaProcessor.GetMediaIdFromUrlAsync(uri);
+                        var media = await InstaApi.MediaProcessor.GetMediaByIdsAsync(mediaid.Value);
+                        Console.WriteLine();
+                        //get link download as property IGTV
+                        if (media.Value[0].ProductType == "igtv")
+                        {
+
+                            LinkDownloadSingleData = media.Value[0].Videos[0].Uri.ToString();
+                            comboboxLinkDownload.Invoke(new Action(() => comboboxLinkDownload.Text = "This page has a slide (IGTV)"));
+                            txtSaveLocation.Invoke(new Action(() => txtSaveLocation.Enabled = true));
+                            btnBrowse.Invoke(new Action(() => btnBrowse.Enabled = true));
+                            btnCheck.Invoke(new Action(() => btnCheck.Enabled = true));
+                            txtUrl.Invoke(new Action(() => txtUrl.Enabled = true));
+                            lblStatus.Invoke(new Action(() => lblStatus.ForeColor = Color.DarkGreen));
+                            lblStatus.Invoke(new Action(() => lblStatus.Text = "Checking URL Complete"));
+
+                        }
+
                         //get link download as property single display video
-                        LinkDownloadSingleData = JsonDesereialaizeObjects.graphql.shortcode_media.video_url;
-                        comboboxLinkDownload.Invoke(new Action(() => comboboxLinkDownload.Text = "This page has a slide"));
-                        txtSaveLocation.Invoke(new Action(() => txtSaveLocation.Enabled = true));
-                        btnBrowse.Invoke(new Action(() => btnBrowse.Enabled = true));
-                        btnCheck.Invoke(new Action(() => btnCheck.Enabled = true));
-                        txtUrl.Invoke(new Action(() => txtUrl.Enabled = true));
-                        lblStatus.Invoke(new Action(() => lblStatus.ForeColor = Color.DarkGreen));
-                        lblStatus.Invoke(new Action(() => lblStatus.Text = "Checking URL Complete"));
+                        else if (media.Value[0].MediaType.ToString() == "Video")
+                        {
 
+                            LinkDownloadSingleData = media.Value[0].Videos[0].Uri.ToString();
+                            comboboxLinkDownload.Invoke(new Action(() => comboboxLinkDownload.Text = "This page has a slide (One Video)"));
+                            txtSaveLocation.Invoke(new Action(() => txtSaveLocation.Enabled = true));
+                            btnBrowse.Invoke(new Action(() => btnBrowse.Enabled = true));
+                            btnCheck.Invoke(new Action(() => btnCheck.Enabled = true));
+                            txtUrl.Invoke(new Action(() => txtUrl.Enabled = true));
+                            lblStatus.Invoke(new Action(() => lblStatus.ForeColor = Color.DarkGreen));
+                            lblStatus.Invoke(new Action(() => lblStatus.Text = "Checking URL Complete"));
 
+                        }
 
-                    }
-                    else if (JsonDesereialaizeObjects.graphql.shortcode_media.__typename == "GraphImage")
-                    {
                         //get link download as property single display Image
-                        LinkDownloadSingleData = JsonDesereialaizeObjects.graphql.shortcode_media.display_url;
-                        comboboxLinkDownload.Invoke(new Action(() => comboboxLinkDownload.Text = "This page has a slide"));
-                        txtSaveLocation.Invoke(new Action(() => txtSaveLocation.Enabled = true));
-                        btnBrowse.Invoke(new Action(() => btnBrowse.Enabled = true));
-                        btnCheck.Invoke(new Action(() => btnCheck.Enabled = true));
-                        txtUrl.Invoke(new Action(() => txtUrl.Enabled = true));
-                        lblStatus.Invoke(new Action(() => lblStatus.ForeColor = Color.DarkGreen));
-                        lblStatus.Invoke(new Action(() => lblStatus.Text = "Checking URL Complete"));
+                        else if (media.Value[0].MediaType.ToString() == "Image")
+                        {
 
-                    }
+                            LinkDownloadSingleData = media.Value[0].Images[0].Uri.ToString();
+                            comboboxLinkDownload.Invoke(new Action(() => comboboxLinkDownload.Text = "This page has a slide (one Image)"));
+                            txtSaveLocation.Invoke(new Action(() => txtSaveLocation.Enabled = true));
+                            btnBrowse.Invoke(new Action(() => btnBrowse.Enabled = true));
+                            btnCheck.Invoke(new Action(() => btnCheck.Enabled = true));
+                            txtUrl.Invoke(new Action(() => txtUrl.Enabled = true));
+                            lblStatus.Invoke(new Action(() => lblStatus.ForeColor = Color.DarkGreen));
+                            lblStatus.Invoke(new Action(() => lblStatus.Text = "Checking URL Complete"));
+
+                        }
 
 
-
-                    else if (JsonDesereialaizeObjects.graphql.shortcode_media.__typename == "GraphSidecar")
-                    {
-                        //get as property multi display picture
-                        Edges[] list = JsonDesereialaizeObjects.graphql.shortcode_media.edge_sidecar_to_children.edges.ToArray();
-
-                        for (int i = 0; i < list.Length; i++)
+                        //get as property multi display picture and Video
+                        else if (media.Value[0].MediaType.ToString() == "Carousel")
                         {
 
 
-                            if (list[i].node.__typename == "GraphImage")
+
+                            for (int i = 0; i < media.Value[0].Carousel.Count; i++)
                             {
 
-                                ListDownload.Add(list[i].node.display_url);
-                                comboboxLinkDownload.Invoke(new Action(() => comboboxLinkDownload.Items.Add("Slide " + (i + 1) + " ( Image )")));
+                                if (media.Value[0].Carousel[i].MediaType.ToString() == "Image")
+                                {
+
+                                    ListDownload.Add(media.Value[0].Carousel[i].Images[0].Uri.ToString());
+                                    comboboxLinkDownload.Invoke(new Action(() => comboboxLinkDownload.Items.Add("Slide " + (i + 1) + " ( Image )")));
+
+                                }
+                                else
+                                {
+                                    ListDownload.Add(media.Value[0].Carousel[i].Videos[0].Uri.ToString());
+                                    comboboxLinkDownload.Invoke(new Action(() => comboboxLinkDownload.Items.Add("Slide " + (i + 1) + " ( Video )")));
+
+                                }
 
                             }
-                            else
-                            {
-                                ListDownload.Add(list[i].node.video_url);
-                                comboboxLinkDownload.Invoke(new Action(() => comboboxLinkDownload.Items.Add("Slide " + (i + 1) + " ( Video )")));
-
-                            }
-
                             comboboxLinkDownload.Invoke(new Action(() => comboboxLinkDownload.Text = "The Pages added"));
                             txtSaveLocation.Invoke(new Action(() => txtSaveLocation.Enabled = true));
                             comboboxLinkDownload.Invoke(new Action(() => comboboxLinkDownload.Enabled = true));
@@ -523,31 +513,28 @@ namespace Insta_Downloader
                             btnCheck.Invoke(new Action(() => btnCheck.Enabled = true));
                             txtUrl.Invoke(new Action(() => txtUrl.Enabled = true));
                             lblStatus.Invoke(new Action(() => lblStatus.ForeColor = Color.DarkGreen));
-
                             lblStatus.Invoke(new Action(() => lblStatus.Text = "Checking URL Complete"));
 
-
                         }
-
-
-
-
-
-
-
-
                     }
+                    catch
+                    {
+                        string errortypechoice = "Invalid URL";
+                        lblStatus.Invoke(new Action(() => lblStatus.ForeColor = Color.Red));
+                        lblStatus.Invoke(new Action(() => lblStatus.Text = "Stop"));
+                        labelPerc.Invoke(new Action(() => labelPerc.Text = "0" + "%"));
+                        txtUrl.Invoke(new Action(() => txtUrl.Enabled = true));
+                        btnCheck.Invoke(new Action(() => btnCheck.Enabled = true));
+                        MessageBox.Show(errortypechoice, "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                    }
+
                 }
-                catch
+                else
                 {
-                    string errortypechoice = "Invalid URL";
-                    lblStatus.Invoke(new Action(() => lblStatus.ForeColor = Color.Red));
-                    lblStatus.Invoke(new Action(() => lblStatus.Text = "Stop"));
-                    labelPerc.Invoke(new Action(() => labelPerc.Text = "0" + "%"));
-                    txtUrl.Invoke(new Action(() => txtUrl.Enabled = true));
-                    btnCheck.Invoke(new Action(() => btnCheck.Enabled = true));
-                    MessageBox.Show(errortypechoice, "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                    MessageBox.Show("Please login first", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
                 }
+
+
             }
             catch
             {
@@ -567,6 +554,173 @@ namespace Insta_Downloader
 
         }
 
+        public async void loginInsta()
+        {
+            try
+            {
+                if (File.Exists(startupPath2 + "//user.txt") == true && File.Exists(startupPath2 + "//pass.txt") == true)
+                {
+                    File.Delete(startupPath2 + "//user.txt");
+                    File.Delete(startupPath2 + "//pass.txt");
+                    loginStatus.Text = "Logging...";
+                    var userSession = new UserSessionData
+                    {
+                        UserName = UsernameText.Text,
+                        Password = PasswordText.Text,
+                    };
+                    InstaApi = InstaApiBuilder.CreateBuilder()
+                        .SetUser(userSession)
+                        .UseLogger(new DebugLogger(LogLevel.All))
+                        .Build();
+                    var loginResult = await InstaApi.LoginAsync();
+                    if (loginResult.Succeeded == true)
+                    {
+                        if (checkBoxRemember.Checked == true)
+                        {
+                            File.WriteAllText(startupPath2 + "//user.txt", UsernameText.Text);
+                            File.WriteAllText(startupPath2 + "//pass.txt", PasswordText.Text);
+                            loginStatus.ForeColor = Color.DarkGreen;
+                            btnLogout.Enabled = true;
+                            loginStatus.Text = "Succeess";
+                        }
+                        else
+                        {
+                            loginStatus.ForeColor = Color.DarkGreen;
+                            btnLogout.Enabled = true;
+                            loginStatus.Text = "Succeess";
+                        }
+
+                    }
+                    else if (loginResult.Value.ToString() == "ChallengeRequired")
+                    {
+                        loginStatus.ForeColor = Color.Red;
+                        loginStatus.Text = "Challenge Required";
+                    }
+                    else
+                    {
+                        loginStatus.ForeColor = Color.Red;
+                        loginStatus.Text = "Invalid User";
+                    }
+                }
+                else
+                {
+                    loginStatus.Text = "Logging...";
+                    var userSession = new UserSessionData
+                    {
+                        UserName = UsernameText.Text,
+                        Password = PasswordText.Text,
+                    };
+                    InstaApi = InstaApiBuilder.CreateBuilder()
+                        .SetUser(userSession)
+                        .UseLogger(new DebugLogger(LogLevel.All))
+                        .Build();
+                    var loginResult = await InstaApi.LoginAsync();
+                    if (loginResult.Succeeded == true)
+                    {
+                        if (checkBoxRemember.Checked == true)
+                        {
+                            File.WriteAllText(startupPath2 + "//user.txt", UsernameText.Text);
+                            File.WriteAllText(startupPath2 + "//pass.txt", PasswordText.Text);
+                            loginStatus.ForeColor = Color.DarkGreen;
+                            btnLogout.Enabled = true;
+                            loginStatus.Text = "Succeess";
+                        }
+                        else
+                        {
+                            loginStatus.ForeColor = Color.DarkGreen;
+                            btnLogout.Enabled = true;
+                            loginStatus.Text = "Succeess";
+                        }
+
+                    }
+                    else if (loginResult.Value.ToString() == "ChallengeRequired")
+                    {
+                        loginStatus.ForeColor = Color.Red;
+                        loginStatus.Text = "Challenge Required";
+                    }
+                    else
+                    {
+                        loginStatus.ForeColor = Color.Red;
+                        loginStatus.Text = "Invalid User";
+                    }
+                }
+
+
+            }
+            catch
+            {
+                loginStatus.ForeColor = Color.Red;
+                loginStatus.Text = "Connection Faild";
+            }
+
+        }
+
+        public async void rememberLogin()
+        {
+            try
+            {
+                
+                if (File.Exists(startupPath2 + "//user.txt") == true && File.Exists(startupPath2 + "//pass.txt") == true)
+                {
+                    loginStatus.Text = "Logging...";
+                    var userSession = new UserSessionData
+                    {
+                        UserName = File.ReadAllText(startupPath2 + "//user.txt"),
+                        Password = File.ReadAllText(startupPath2 + "//pass.txt"),
+                    };
+                    InstaApi = InstaApiBuilder.CreateBuilder()
+                        .SetUser(userSession)
+                        .UseLogger(new DebugLogger(LogLevel.All))
+                        .Build();
+
+                    var loginResult = await InstaApi.LoginAsync();
+
+                    if (loginResult.Succeeded == true)
+                    {
+                        loginStatus.ForeColor = Color.DarkGreen;
+                        btnLogout.Enabled = true;
+                        loginStatus.Text = "Succeess";
+                    }
+                    else if (loginResult.Value.ToString() == "ChallengeRequired")
+                    {
+
+                        MessageBox.Show("ChallengeRequired please try to login again", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                        File.Delete(startupPath2 + "//user.txt");
+                        File.Delete(startupPath2 + "//pass.txt");
+                        btnLogout.Enabled = false;
+                        loginStatus.Text = "Not Login";
+
+                    }
+                    else if (loginResult.Value.ToString() == "Invalid User")
+                    {
+
+                        File.Delete(startupPath2 + "//user.txt");
+                        File.Delete(startupPath2 + "//pass.txt");
+                        MessageBox.Show("Invalid User please try to login again", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                        btnLogout.Enabled = false;
+                        loginStatus.Text = "Not Login";
+
+                    }
+
+
+                }
+
+                else
+                {
+                    loginStatus.Text = "Not Login";
+                    btnLogout.Enabled = false;
+                }
+            }
+            catch
+            {
+                loginStatus.ForeColor = Color.Red;
+                loginStatus.Text = "Connection Faild";
+            }
+        }
+
+
+
+
 
 
         #endregion
@@ -575,5 +729,6 @@ namespace Insta_Downloader
 
         
     }
+
 }
 
