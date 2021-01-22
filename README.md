@@ -1,9 +1,7 @@
-# InstagramDownloader
+# InstagramDownloader V2.0 Updated 2021/1/22
 **برنامه ای نوشته شده با زبان سی شارپ برای دانلود محتواهایی همچون فیلم عکس و آی جی تی وی**
 
 لطفا با ما در توسعه این برنامه همکاری کنید
-
-اگر کسی میتواند در بخش لاگین به جای استفاده از کوکی از ای پی ای رسمی اینستا استفاده کند و تغییرات را با من به اشتراک بگذارد
 
 
 **A C# application to download Instagram images , Videos and IGTV**
@@ -13,11 +11,6 @@ Please cooperate with us in developing the application.
 
 
 
-If someone can use Instagram api instead of cookies in the login in the program.
 
-
-
-
-
-![Capture](https://user-images.githubusercontent.com/77751863/105381939-cd6d4300-5c24-11eb-942e-2cdd07bb998f.PNG)
-![Capture1](https://user-images.githubusercontent.com/77751863/105381966-d52ce780-5c24-11eb-8d56-ae310cdd9f07.PNG)
+![Capture](https://user-images.githubusercontent.com/77751863/105541281-c588ce00-5d0c-11eb-9909-e6ffbe74f63c.PNG)
+![Capture2](https://user-images.githubusercontent.com/77751863/105541411-f9fc8a00-5d0c-11eb-812b-8591c985afcb.PNG)
