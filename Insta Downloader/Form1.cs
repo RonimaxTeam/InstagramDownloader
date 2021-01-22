@@ -378,15 +378,14 @@ namespace Insta_Downloader
         {
 
             // Apply the rule on the URL
-            
-
+            string patternUrl1 = "^(https://www.instagram.com/p/)";
+            System.Text.RegularExpressions.Regex expression1 = new System.Text.RegularExpressions.Regex(patternUrl1);
+            string patternUrl2 = "^(https://www.instagram.com/tv/)";
+            System.Text.RegularExpressions.Regex expression2 = new System.Text.RegularExpressions.Regex(patternUrl2);
             //Check the input URL Structure
-            
-           
+            if (expression1.IsMatch(txtUrl.Text) || expression2.IsMatch(txtUrl.Text))
+            {
                 URL = txtUrl.Text;
-
-                //Check Combo box File Type
-
                 btnCheck.Enabled = false;
                 txtUrl.Enabled = false;
                 comboboxLinkDownload.Items.Clear();
@@ -398,13 +397,11 @@ namespace Insta_Downloader
                 lblStatus.ForeColor = Color.DarkOrange;
                 lblStatus.Text = "Checking URL";
                 progressBar1.Value = 0;
-
-
                 thread = new Thread(new ThreadStart(GetInfo));
                 thread.Start();
 
 
-
+            }
 
             
 
