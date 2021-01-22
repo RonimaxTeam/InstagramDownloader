@@ -9,7 +9,7 @@
 Please cooperate with us in developing the application.
 
 **Download Link InstagramDownloader.exe** :
-[Instagram Downloader.zip](https://github.com/RonimaxTeam/InstagramDownloader/files/5858564/Instagram.Downloader.zip)
+[Instagram Downloader.zip](https://github.com/RonimaxTeam/InstagramDownloader/files/5858600/Instagram.Downloader.zip)
 
 
 
