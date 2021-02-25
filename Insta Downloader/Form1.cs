@@ -11,7 +11,6 @@ using InstagramApiSharp.API.Builder;
 using InstagramApiSharp.Classes;
 using InstagramApiSharp.Logger;
 using InstagramApiSharp.API;
-using System.Diagnostics;
 using System.Threading.Tasks;
 
 namespace Insta_Downloader
@@ -236,6 +235,21 @@ namespace Insta_Downloader
         // Download Progeress Changed Event
         private void wc_DownloadProgressChanged(object sender, DownloadProgressChangedEventArgs e)
         {
+            Invoke((MethodInvoker)delegate
+            {
+                // Calculate download speed and output it to labelSpeed.
+                labelSpeed.Text = string.Format("{0} Kb/s", (e.BytesReceived / 1024d / stopWatch.Elapsed.TotalSeconds).ToString("0.00", System.Globalization.CultureInfo.InvariantCulture));
+                // Calculate download speed and output it to labelSpeed.
+
+                // Update the progressbar percentage only when the value is not the same.
+
+
+                // Show the percentage on our label.
+
+
+                // Update the label with how much data have been downloaded so far and the total size of the file we are currently downloading
+
+            });
 
             // Calculate download speed and output it to labelSpeed.
             labelSpeed.Invoke(new Action(() => labelSpeed.Text = string.Format("{0} Kb/s", (e.BytesReceived / 1024d / stopWatch.Elapsed.TotalSeconds).ToString("0.00", System.Globalization.CultureInfo.InvariantCulture))));
