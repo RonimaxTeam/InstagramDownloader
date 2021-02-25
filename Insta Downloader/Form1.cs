@@ -237,7 +237,7 @@ namespace Insta_Downloader
             Invoke((MethodInvoker)delegate
             {
                 // Calculate download speed and output it to labelSpeed.
-                labelSpeed.Text = string.Format("{0} Kb/s", (e.BytesReceived / 1024d / stopWatch.Elapsed.TotalSeconds).ToString("0.00", System.Globalization.CultureInfo.InvariantCulture));
+                labelSpeed.Text = string.Format($"{(e.BytesReceived / 1024d / stopWatch.Elapsed.TotalSeconds).ToString("0.00", System.Globalization.CultureInfo.InvariantCulture)} Kb/s");
                 
                 // Update the progressbar percentage only when the value is not the same.
                 progressBar1.Value = e.ProgressPercentage;
@@ -246,9 +246,7 @@ namespace Insta_Downloader
                 labelPerc.Text = e.ProgressPercentage.ToString() + " %";
 
                 // Update the label with how much data have been downloaded so far and the total size of the file we are currently downloading
-                labelDownloaded.Text = string.Format("{0} MB / {1} MB",
-                    (e.BytesReceived / 1024d / 1024d).ToString("0.00"),
-                    (e.TotalBytesToReceive / 1024d / 1024d).ToString("0.00"));
+                labelDownloaded.Text = string.Format($"{ (e.BytesReceived / 1024d / 1024d).ToString("0.00")} MB / {(e.TotalBytesToReceive / 1024d / 1024d).ToString("0.00")} MB");
             });
 
         }
@@ -715,12 +713,15 @@ namespace Insta_Downloader
         }
         public void DownloadingDesign()
         {
-            labelDownloadSpeed.Invoke(new Action(() => labelDownloadSpeed.Enabled = true));
-            labelDownloadedAndTotal.Invoke(new Action(() => labelDownloadedAndTotal.Enabled = true));
+            Invoke((MethodInvoker) delegate
+            {
+                labelDownloadSpeed.Enabled = true;
+                labelDownloadedAndTotal.Enabled = true;
+                lblStatus.ForeColor = Color.DodgerBlue;
+                lblStatus.Text = "Downloading...";
+            });
             webClient.DownloadProgressChanged += new DownloadProgressChangedEventHandler(wc_DownloadProgressChanged);
             webClient.DownloadFileCompleted += new AsyncCompletedEventHandler(wc_DownloadFileCompleted);
-            lblStatus.Invoke(new Action(() => lblStatus.ForeColor = Color.DodgerBlue));
-            lblStatus.Invoke(new Action(() => lblStatus.Text = "Downloading..."));
         }
         #endregion
 
