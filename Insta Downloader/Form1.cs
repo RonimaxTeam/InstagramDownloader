@@ -229,41 +229,27 @@ namespace Insta_Downloader
         }
 
         #endregion
-
+        
         #region Download Progeress Changed Event
 
-        // Download Progeress Changed Event
         private void wc_DownloadProgressChanged(object sender, DownloadProgressChangedEventArgs e)
         {
             Invoke((MethodInvoker)delegate
             {
                 // Calculate download speed and output it to labelSpeed.
                 labelSpeed.Text = string.Format("{0} Kb/s", (e.BytesReceived / 1024d / stopWatch.Elapsed.TotalSeconds).ToString("0.00", System.Globalization.CultureInfo.InvariantCulture));
-                // Calculate download speed and output it to labelSpeed.
-
+                
                 // Update the progressbar percentage only when the value is not the same.
-
+                progressBar1.Value = e.ProgressPercentage;
 
                 // Show the percentage on our label.
-
+                labelPerc.Text = e.ProgressPercentage.ToString() + " %";
 
                 // Update the label with how much data have been downloaded so far and the total size of the file we are currently downloading
-
+                labelDownloaded.Text = string.Format("{0} MB / {1} MB",
+                    (e.BytesReceived / 1024d / 1024d).ToString("0.00"),
+                    (e.TotalBytesToReceive / 1024d / 1024d).ToString("0.00"));
             });
-
-            // Calculate download speed and output it to labelSpeed.
-            labelSpeed.Invoke(new Action(() => labelSpeed.Text = string.Format("{0} Kb/s", (e.BytesReceived / 1024d / stopWatch.Elapsed.TotalSeconds).ToString("0.00", System.Globalization.CultureInfo.InvariantCulture))));
-
-            // Update the progressbar percentage only when the value is not the same.
-            progressBar1.Invoke(new Action(() => progressBar1.Value = e.ProgressPercentage));
-
-            // Show the percentage on our label.
-            labelPerc.Invoke(new Action(() => labelPerc.Text = e.ProgressPercentage.ToString() + " %"));
-
-            // Update the label with how much data have been downloaded so far and the total size of the file we are currently downloading
-            labelDownloaded.Invoke(new Action(() => labelDownloaded.Text = string.Format("{0} MB / {1} MB",
-                (e.BytesReceived / 1024d / 1024d).ToString("0.00"),
-                (e.TotalBytesToReceive / 1024d / 1024d).ToString("0.00"))));
 
         }
 
@@ -350,12 +336,7 @@ namespace Insta_Downloader
             try
             {
 
-                labelDownloadSpeed.Invoke(new Action(() => labelDownloadSpeed.Enabled = true));
-                labelDownloadedAndTotal.Invoke(new Action(() => labelDownloadedAndTotal.Enabled = true));
-                webClient.DownloadProgressChanged += new DownloadProgressChangedEventHandler(wc_DownloadProgressChanged);
-                webClient.DownloadFileCompleted += new AsyncCompletedEventHandler(wc_DownloadFileCompleted);
-                lblStatus.Invoke(new Action(() => lblStatus.ForeColor = Color.DodgerBlue));
-                lblStatus.Invoke(new Action(() => lblStatus.Text = "Downloading..."));
+                DownloadingDesign();
 
                 // Start the stopwatch which we will be using to calculate the download speed
                 stopWatch.Start();
@@ -731,6 +712,15 @@ namespace Insta_Downloader
 
            
             // https://www.instagram.com/p/CLuZfB9DFuX/?utm_source=ig_web_copy_link
+        }
+        public void DownloadingDesign()
+        {
+            labelDownloadSpeed.Invoke(new Action(() => labelDownloadSpeed.Enabled = true));
+            labelDownloadedAndTotal.Invoke(new Action(() => labelDownloadedAndTotal.Enabled = true));
+            webClient.DownloadProgressChanged += new DownloadProgressChangedEventHandler(wc_DownloadProgressChanged);
+            webClient.DownloadFileCompleted += new AsyncCompletedEventHandler(wc_DownloadFileCompleted);
+            lblStatus.Invoke(new Action(() => lblStatus.ForeColor = Color.DodgerBlue));
+            lblStatus.Invoke(new Action(() => lblStatus.Text = "Downloading..."));
         }
         #endregion
 
