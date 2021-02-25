@@ -25,12 +25,12 @@ namespace Insta_Downloader
         static string URL;
         string LinkDownloadSingleData;
         List<string> ListDownload = new List<string>();
-        string startupPath2 = Path.GetDirectoryName(System.Reflection.Assembly.GetEntryAssembly().Location);
+        private string startupPath2 = Application.StartupPath;
         Thread thread;
         private IInstaApi InstaApi;
         Thread thread2;
         private string URLDownload;
-
+        private double speed;
         #endregion
 
         #region Constractor
@@ -238,7 +238,7 @@ namespace Insta_Downloader
             {
                 // Calculate download speed and output it to labelSpeed.
                 labelSpeed.Text = string.Format("{0} Kb/s", (e.BytesReceived / 1024d / stopWatch.Elapsed.TotalSeconds).ToString("0.00", System.Globalization.CultureInfo.InvariantCulture));
-                
+
                 // Update the progressbar percentage only when the value is not the same.
                 progressBar1.Value = e.ProgressPercentage;
 
@@ -276,7 +276,6 @@ namespace Insta_Downloader
 
         #region Methods
 
-        //Button Start Download Method
         private void StartDownload()
         {
 
@@ -299,7 +298,6 @@ namespace Insta_Downloader
 
         }
 
-        //Button Stop Download Method
         private void StopDownload()
         {
 
@@ -330,20 +328,18 @@ namespace Insta_Downloader
 
         }
 
-        //Downloader Method
         public void DownloaderMethod()
         {
             try
             {
 
                 DownloadingDesign();
-
+                
                 // Start the stopwatch which we will be using to calculate the download speed
                 stopWatch.Start();
 
-
-                Uri imguri = new Uri(URLDownload);
-                webClient.DownloadFileAsync(imguri, txtSaveLocation.Text);
+                Uri InformationURI = new Uri(URLDownload);
+                webClient.DownloadFileAsync(InformationURI, txtSaveLocation.Text);
 
             }
             catch
@@ -352,7 +348,6 @@ namespace Insta_Downloader
             }
         }
 
-        // Apply the rule on the URL and Check the input URL Structure by CheckStructureURL Method
         public void CheckStructureURL()
         {
 
@@ -374,7 +369,6 @@ namespace Insta_Downloader
 
         }
 
-        //Get Info from the URL And Set to Property by GetInfo Method
         public async void GetInfo()
         {
             CheckingURLDesign();
@@ -468,8 +462,7 @@ namespace Insta_Downloader
 
         public async void loginInsta()
         {
-            Stopwatch stopwatch = new Stopwatch();
-            stopwatch.Start();
+
 
 
 
@@ -492,8 +485,6 @@ namespace Insta_Downloader
                         .UseLogger(new DebugLogger(LogLevel.All))
                         .Build();
                     var loginResult = await InstaApi.LoginAsync();
-                    stopwatch.Stop();
-                    MessageBox.Show(stopwatch.ElapsedMilliseconds.ToString());
                     if (loginResult.Succeeded == true)
                     {
                         if (checkBoxRemember.Checked == true)
@@ -536,8 +527,6 @@ namespace Insta_Downloader
                         .UseLogger(new DebugLogger(LogLevel.All))
                         .Build();
                     var loginResult = await InstaApi.LoginAsync();
-                    stopwatch.Stop();
-                    MessageBox.Show(stopwatch.ElapsedMilliseconds.ToString());
                     if (loginResult.Succeeded == true)
                     {
                         if (checkBoxRemember.Checked == true)
@@ -708,6 +697,7 @@ namespace Insta_Downloader
            
             // https://www.instagram.com/p/CLuZfB9DFuX/?utm_source=ig_web_copy_link
         }
+
         public void DownloadingDesign()
         {
             labelDownloadSpeed.Invoke(new Action(() => labelDownloadSpeed.Enabled = true));
