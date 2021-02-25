@@ -662,30 +662,35 @@ namespace Insta_Downloader
 
         public void CheckingURLDesign()
         {
-            btnBrowse.Invoke(new Action(() => btnCheck.Enabled = false));
-            btnBrowse.Invoke(new Action(() => txtUrl.Enabled = false));
-            btnBrowse.Invoke(new Action(() => comboboxLinkDownload.Items.Clear()));
-            btnBrowse.Invoke(new Action(() => txtSaveLocation.Enabled = false));
-            btnBrowse.Invoke(new Action(() => comboboxLinkDownload.Enabled = false));
-            btnBrowse.Invoke(new Action(() => comboboxLinkDownload.Text = String.Empty));
-            btnBrowse.Invoke(new Action(() => btnBrowse.Enabled = false));
-            btnBrowse.Invoke(new Action(() => txtSaveLocation.Text = String.Empty));
-            btnBrowse.Invoke(new Action(() => lblStatus.ForeColor = Color.DarkOrange));
-            btnBrowse.Invoke(new Action(() => lblStatus.Text = "Checking URL"));
-            btnBrowse.Invoke(new Action(() => progressBar1.Value = 0));
+            Invoke((MethodInvoker)delegate
+            {
+                btnCheck.Enabled = false;
+                txtUrl.Enabled = false;
+                comboboxLinkDownload.Items.Clear();
+                txtSaveLocation.Enabled = false;
+                comboboxLinkDownload.Enabled = false;
+                comboboxLinkDownload.Text = String.Empty;
+                btnBrowse.Enabled = false;
+                txtSaveLocation.Text = String.Empty;
+                lblStatus.ForeColor = Color.DarkOrange;
+                lblStatus.Text = "Checking URL";
+                progressBar1.Value = 0;
+            });
         }
 
         public void CheckingURLCompleteDesign(string comboboxstatus)
         {
-
-            comboboxLinkDownload.Invoke(new Action(() => comboboxLinkDownload.Enabled = true));
-            comboboxLinkDownload.Invoke(new Action(() => comboboxLinkDownload.Text = comboboxstatus));
-            txtSaveLocation.Invoke(new Action(() => txtSaveLocation.Enabled = true));
-            btnBrowse.Invoke(new Action(() => btnBrowse.Enabled = true));
-            btnCheck.Invoke(new Action(() => btnCheck.Enabled = true));
-            txtUrl.Invoke(new Action(() => txtUrl.Enabled = true));
-            lblStatus.Invoke(new Action(() => lblStatus.ForeColor = Color.DarkGreen));
-            lblStatus.Invoke(new Action(() => lblStatus.Text = "Checking URL Complete"));
+            Invoke((MethodInvoker) delegate
+            {
+                comboboxLinkDownload.Enabled = true;
+                comboboxLinkDownload.Text = comboboxstatus;
+                txtSaveLocation.Enabled = true;
+                btnBrowse.Enabled = true;
+                btnCheck.Enabled = true;
+                txtUrl.Enabled = true;
+                lblStatus.ForeColor = Color.DarkGreen;
+                lblStatus.Text = "Checking URL Complete";
+            });
         }
 
         public void InvalidURLDesign()
