@@ -468,7 +468,6 @@ namespace Insta_Downloader
             this.tabControl1.SelectedIndex = 0;
             this.tabControl1.Size = new System.Drawing.Size(559, 501);
             this.tabControl1.TabIndex = 38;
-            
             // 
             // tabPageDownloader
             // 
@@ -483,7 +482,6 @@ namespace Insta_Downloader
             // 
             // tabPageLogin
             // 
-            this.tabPageLogin.BackgroundImage = global::Insta_Downloader.Properties.Resources.TabLogin;
             this.tabPageLogin.Controls.Add(this.loginStatus);
             this.tabPageLogin.Controls.Add(this.btnLogout);
             this.tabPageLogin.Controls.Add(this.checkBoxRemember);
