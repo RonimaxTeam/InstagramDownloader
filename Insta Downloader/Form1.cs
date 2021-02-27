@@ -237,8 +237,8 @@ namespace Insta_Downloader
             Invoke((MethodInvoker)delegate
             {
                 // Calculate download speed and output it to labelSpeed.
-                labelSpeed.Text = string.Format("{0} Kb/s", (e.BytesReceived / 1024d / stopWatch.Elapsed.TotalSeconds).ToString("0.00", System.Globalization.CultureInfo.InvariantCulture));
-
+                labelSpeed.Text = string.Format($"{(e.BytesReceived / 1024d / stopWatch.Elapsed.TotalSeconds).ToString("0.00", System.Globalization.CultureInfo.InvariantCulture)} Kb/s");
+                
                 // Update the progressbar percentage only when the value is not the same.
                 progressBar1.Value = e.ProgressPercentage;
 
@@ -246,9 +246,7 @@ namespace Insta_Downloader
                 labelPerc.Text = e.ProgressPercentage.ToString() + " %";
 
                 // Update the label with how much data have been downloaded so far and the total size of the file we are currently downloading
-                labelDownloaded.Text = string.Format("{0} MB / {1} MB",
-                    (e.BytesReceived / 1024d / 1024d).ToString("0.00"),
-                    (e.TotalBytesToReceive / 1024d / 1024d).ToString("0.00"));
+                labelDownloaded.Text = string.Format($"{ (e.BytesReceived / 1024d / 1024d).ToString("0.00")} MB / {(e.TotalBytesToReceive / 1024d / 1024d).ToString("0.00")} MB");
             });
 
         }
@@ -632,30 +630,35 @@ namespace Insta_Downloader
 
         public void CheckingURLDesign()
         {
-            btnBrowse.Invoke(new Action(() => btnCheck.Enabled = false));
-            btnBrowse.Invoke(new Action(() => txtUrl.Enabled = false));
-            btnBrowse.Invoke(new Action(() => comboboxLinkDownload.Items.Clear()));
-            btnBrowse.Invoke(new Action(() => txtSaveLocation.Enabled = false));
-            btnBrowse.Invoke(new Action(() => comboboxLinkDownload.Enabled = false));
-            btnBrowse.Invoke(new Action(() => comboboxLinkDownload.Text = String.Empty));
-            btnBrowse.Invoke(new Action(() => btnBrowse.Enabled = false));
-            btnBrowse.Invoke(new Action(() => txtSaveLocation.Text = String.Empty));
-            btnBrowse.Invoke(new Action(() => lblStatus.ForeColor = Color.DarkOrange));
-            btnBrowse.Invoke(new Action(() => lblStatus.Text = "Checking URL"));
-            btnBrowse.Invoke(new Action(() => progressBar1.Value = 0));
+            Invoke((MethodInvoker)delegate
+            {
+                btnCheck.Enabled = false;
+                txtUrl.Enabled = false;
+                comboboxLinkDownload.Items.Clear();
+                txtSaveLocation.Enabled = false;
+                comboboxLinkDownload.Enabled = false;
+                comboboxLinkDownload.Text = String.Empty;
+                btnBrowse.Enabled = false;
+                txtSaveLocation.Text = String.Empty;
+                lblStatus.ForeColor = Color.DarkOrange;
+                lblStatus.Text = "Checking URL";
+                progressBar1.Value = 0;
+            });
         }
 
         public void CheckingURLCompleteDesign(string comboboxstatus)
         {
-
-            comboboxLinkDownload.Invoke(new Action(() => comboboxLinkDownload.Enabled = true));
-            comboboxLinkDownload.Invoke(new Action(() => comboboxLinkDownload.Text = comboboxstatus));
-            txtSaveLocation.Invoke(new Action(() => txtSaveLocation.Enabled = true));
-            btnBrowse.Invoke(new Action(() => btnBrowse.Enabled = true));
-            btnCheck.Invoke(new Action(() => btnCheck.Enabled = true));
-            txtUrl.Invoke(new Action(() => txtUrl.Enabled = true));
-            lblStatus.Invoke(new Action(() => lblStatus.ForeColor = Color.DarkGreen));
-            lblStatus.Invoke(new Action(() => lblStatus.Text = "Checking URL Complete"));
+            Invoke((MethodInvoker) delegate
+            {
+                comboboxLinkDownload.Enabled = true;
+                comboboxLinkDownload.Text = comboboxstatus;
+                txtSaveLocation.Enabled = true;
+                btnBrowse.Enabled = true;
+                btnCheck.Enabled = true;
+                txtUrl.Enabled = true;
+                lblStatus.ForeColor = Color.DarkGreen;
+                lblStatus.Text = "Checking URL Complete";
+            });
         }
 
         public void InvalidURLDesign()
@@ -700,12 +703,15 @@ namespace Insta_Downloader
 
         public void DownloadingDesign()
         {
-            labelDownloadSpeed.Invoke(new Action(() => labelDownloadSpeed.Enabled = true));
-            labelDownloadedAndTotal.Invoke(new Action(() => labelDownloadedAndTotal.Enabled = true));
+            Invoke((MethodInvoker) delegate
+            {
+                labelDownloadSpeed.Enabled = true;
+                labelDownloadedAndTotal.Enabled = true;
+                lblStatus.ForeColor = Color.DodgerBlue;
+                lblStatus.Text = "Downloading...";
+            });
             webClient.DownloadProgressChanged += new DownloadProgressChangedEventHandler(wc_DownloadProgressChanged);
             webClient.DownloadFileCompleted += new AsyncCompletedEventHandler(wc_DownloadFileCompleted);
-            lblStatus.Invoke(new Action(() => lblStatus.ForeColor = Color.DodgerBlue));
-            lblStatus.Invoke(new Action(() => lblStatus.Text = "Downloading..."));
         }
         #endregion
 
