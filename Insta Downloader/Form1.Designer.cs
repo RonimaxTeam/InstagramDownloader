@@ -1,4 +1,9 @@
-﻿
+﻿using System;
+using System.ComponentModel;
+using System.Drawing;
+using System.Windows.Forms;
+using System.Net;
+
 namespace Insta_Downloader
 {
     partial class Form1
@@ -230,10 +235,12 @@ namespace Insta_Downloader
             this.lblStatus.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
             | System.Windows.Forms.AnchorStyles.Right)));
             this.lblStatus.Font = new System.Drawing.Font("Segoe Script", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.lblStatus.ForeColor = System.Drawing.Color.Red;
             this.lblStatus.Location = new System.Drawing.Point(-1, -1);
             this.lblStatus.Name = "lblStatus";
             this.lblStatus.Size = new System.Drawing.Size(453, 26);
             this.lblStatus.TabIndex = 37;
+            this.lblStatus.Text = "Stop";
             this.lblStatus.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
             // 
             // panel3
@@ -258,7 +265,7 @@ namespace Insta_Downloader
             this.labelSpeed.AutoSize = true;
             this.labelSpeed.BackColor = System.Drawing.Color.Transparent;
             this.labelSpeed.Font = new System.Drawing.Font("Goudy Old Style", 9F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.labelSpeed.Location = new System.Drawing.Point(134, 59);
+            this.labelSpeed.Location = new System.Drawing.Point(134, 156);
             this.labelSpeed.Name = "labelSpeed";
             this.labelSpeed.Size = new System.Drawing.Size(0, 16);
             this.labelSpeed.TabIndex = 26;
@@ -303,6 +310,7 @@ namespace Insta_Downloader
             this.btnStart.BackColor = System.Drawing.SystemColors.InactiveCaption;
             this.btnStart.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Center;
             this.btnStart.Cursor = System.Windows.Forms.Cursors.Hand;
+            this.btnStart.Enabled = false;
             this.btnStart.FlatStyle = System.Windows.Forms.FlatStyle.System;
             this.btnStart.Font = new System.Drawing.Font("Footlight MT Light", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.btnStart.ForeColor = System.Drawing.Color.Black;
@@ -357,6 +365,7 @@ namespace Insta_Downloader
             this.txtSaveLocation.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
             | System.Windows.Forms.AnchorStyles.Right)));
             this.txtSaveLocation.BackColor = System.Drawing.Color.Gainsboro;
+            this.txtSaveLocation.Enabled = false;
             this.txtSaveLocation.ForeColor = System.Drawing.SystemColors.ActiveCaptionText;
             this.txtSaveLocation.Location = new System.Drawing.Point(92, 72);
             this.txtSaveLocation.Multiline = true;
@@ -379,6 +388,7 @@ namespace Insta_Downloader
             this.btnBrowse.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
             this.btnBrowse.BackColor = System.Drawing.SystemColors.InactiveCaption;
             this.btnBrowse.Cursor = System.Windows.Forms.Cursors.Hand;
+            this.btnBrowse.Enabled = false;
             this.btnBrowse.FlatStyle = System.Windows.Forms.FlatStyle.System;
             this.btnBrowse.Font = new System.Drawing.Font("Footlight MT Light", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.btnBrowse.ForeColor = System.Drawing.SystemColors.ActiveCaptionText;
@@ -425,6 +435,7 @@ namespace Insta_Downloader
             | System.Windows.Forms.AnchorStyles.Right)));
             this.comboboxLinkDownload.BackColor = System.Drawing.Color.Gainsboro;
             this.comboboxLinkDownload.Cursor = System.Windows.Forms.Cursors.Hand;
+            this.comboboxLinkDownload.Enabled = false;
             this.comboboxLinkDownload.FormattingEnabled = true;
             this.comboboxLinkDownload.Location = new System.Drawing.Point(92, 37);
             this.comboboxLinkDownload.Name = "comboboxLinkDownload";
@@ -439,8 +450,9 @@ namespace Insta_Downloader
             this.labelPerc.Font = new System.Drawing.Font("Goudy Old Style", 9.75F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.labelPerc.Location = new System.Drawing.Point(518, 257);
             this.labelPerc.Name = "labelPerc";
-            this.labelPerc.Size = new System.Drawing.Size(0, 17);
+            this.labelPerc.Size = new System.Drawing.Size(28, 17);
             this.labelPerc.TabIndex = 11;
+            this.labelPerc.Text = "0 %";
             // 
             // btnCheck
             // 
@@ -505,16 +517,17 @@ namespace Insta_Downloader
             | System.Windows.Forms.AnchorStyles.Right)));
             this.loginStatus.BackColor = System.Drawing.Color.White;
             this.loginStatus.Font = new System.Drawing.Font("Segoe Script", 11.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.loginStatus.Location = new System.Drawing.Point(158, 423);
+            this.loginStatus.Location = new System.Drawing.Point(84, 286);
             this.loginStatus.Name = "loginStatus";
-            this.loginStatus.Size = new System.Drawing.Size(245, 35);
+            this.loginStatus.Size = new System.Drawing.Size(461, 35);
             this.loginStatus.TabIndex = 38;
             this.loginStatus.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
             // 
             // btnLogout
             // 
+            this.btnLogout.Enabled = false;
             this.btnLogout.Font = new System.Drawing.Font("Footlight MT Light", 12F);
-            this.btnLogout.Location = new System.Drawing.Point(158, 356);
+            this.btnLogout.Location = new System.Drawing.Point(151, 204);
             this.btnLogout.Name = "btnLogout";
             this.btnLogout.Size = new System.Drawing.Size(239, 32);
             this.btnLogout.TabIndex = 25;
@@ -526,7 +539,7 @@ namespace Insta_Downloader
             // 
             this.checkBoxRemember.AutoSize = true;
             this.checkBoxRemember.BackColor = System.Drawing.Color.Transparent;
-            this.checkBoxRemember.Location = new System.Drawing.Point(197, 396);
+            this.checkBoxRemember.Location = new System.Drawing.Point(185, 249);
             this.checkBoxRemember.Name = "checkBoxRemember";
             this.checkBoxRemember.Size = new System.Drawing.Size(166, 20);
             this.checkBoxRemember.TabIndex = 24;
@@ -539,7 +552,7 @@ namespace Insta_Downloader
             this.label12.BackColor = System.Drawing.Color.Transparent;
             this.label12.Font = new System.Drawing.Font("Sitka Text", 12F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.label12.ForeColor = System.Drawing.Color.Black;
-            this.label12.Location = new System.Drawing.Point(85, 427);
+            this.label12.Location = new System.Drawing.Point(6, 291);
             this.label12.Name = "label12";
             this.label12.Size = new System.Drawing.Size(72, 23);
             this.label12.TabIndex = 23;
@@ -550,7 +563,7 @@ namespace Insta_Downloader
             this.label11.AutoSize = true;
             this.label11.BackColor = System.Drawing.Color.Transparent;
             this.label11.Font = new System.Drawing.Font("Sitka Text", 9.749999F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.label11.Location = new System.Drawing.Point(81, 280);
+            this.label11.Location = new System.Drawing.Point(74, 128);
             this.label11.Name = "label11";
             this.label11.Size = new System.Drawing.Size(71, 19);
             this.label11.TabIndex = 22;
@@ -560,7 +573,7 @@ namespace Insta_Downloader
             // 
             this.label10.BackColor = System.Drawing.Color.Transparent;
             this.label10.Font = new System.Drawing.Font("Sitka Text", 9.749999F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.label10.Location = new System.Drawing.Point(85, 240);
+            this.label10.Location = new System.Drawing.Point(78, 88);
             this.label10.Name = "label10";
             this.label10.Size = new System.Drawing.Size(47, 19);
             this.label10.TabIndex = 21;
@@ -569,7 +582,7 @@ namespace Insta_Downloader
             // btnLogin
             // 
             this.btnLogin.Font = new System.Drawing.Font("Footlight MT Light", 12F);
-            this.btnLogin.Location = new System.Drawing.Point(158, 317);
+            this.btnLogin.Location = new System.Drawing.Point(151, 165);
             this.btnLogin.Name = "btnLogin";
             this.btnLogin.Size = new System.Drawing.Size(239, 32);
             this.btnLogin.TabIndex = 19;
@@ -579,7 +592,7 @@ namespace Insta_Downloader
             // 
             // PasswordText
             // 
-            this.PasswordText.Location = new System.Drawing.Point(158, 275);
+            this.PasswordText.Location = new System.Drawing.Point(151, 123);
             this.PasswordText.Multiline = true;
             this.PasswordText.Name = "PasswordText";
             this.PasswordText.PasswordChar = '*';
@@ -588,7 +601,7 @@ namespace Insta_Downloader
             // 
             // UsernameText
             // 
-            this.UsernameText.Location = new System.Drawing.Point(158, 236);
+            this.UsernameText.Location = new System.Drawing.Point(151, 84);
             this.UsernameText.Multiline = true;
             this.UsernameText.Name = "UsernameText";
             this.UsernameText.Size = new System.Drawing.Size(239, 30);
@@ -624,6 +637,116 @@ namespace Insta_Downloader
             this.ResumeLayout(false);
 
         }
+
+        public void CheckingURLDesign()
+        {
+            Invoke((MethodInvoker)delegate
+            {
+                btnCheck.Enabled = false;
+                txtUrl.Enabled = false;
+                comboboxLinkDownload.Items.Clear();
+                txtSaveLocation.Enabled = false;
+                comboboxLinkDownload.Enabled = false;
+                comboboxLinkDownload.Text = String.Empty;
+                btnBrowse.Enabled = false;
+                txtSaveLocation.Text = String.Empty;
+                lblStatus.ForeColor = Color.DarkOrange;
+                lblStatus.Text = "Checking URL";
+                progressBar1.Value = 0;
+            });
+        }
+
+        public void CheckingURLCompleteDesign(string comboboxstatus)
+        {
+            Invoke((MethodInvoker)delegate
+            {
+                comboboxLinkDownload.Enabled = true;
+                comboboxLinkDownload.Text = comboboxstatus;
+                txtSaveLocation.Enabled = true;
+                btnBrowse.Enabled = true;
+                btnCheck.Enabled = true;
+                txtUrl.Enabled = true;
+                lblStatus.ForeColor = Color.DarkGreen;
+                lblStatus.Text = "Checking URL Complete";
+            });
+        }
+
+        public void InvalidURLDesign()
+        {
+            Invoke((MethodInvoker)delegate
+            {
+                lblStatus.ForeColor = Color.Red;
+                lblStatus.Text = "Stop";
+                labelPerc.Text = "0" + "%";
+                txtUrl.Enabled = true;
+                btnCheck.Enabled = true;
+
+            });
+
+        }
+
+        public void DownloadCompletedDesign()
+        {
+            Invoke((MethodInvoker)delegate
+            {
+                btnStart.Enabled = false;
+                labelPerc.Text = String.Empty;
+                btnStart.Text = "Start Download";
+                labelSpeed.Text = String.Empty;
+                labelDownloaded.Text = String.Empty;
+                lblStatus.ForeColor = Color.SeaGreen;
+                labelPerc.Text = "100" + " %";
+                comboboxLinkDownload.Text = String.Empty;
+                comboboxLinkDownload.Enabled = false;
+                btnCheck.Enabled = true;
+                txtSaveLocation.Enabled = false;
+                txtSaveLocation.Text = String.Empty;
+                LinkDownloadSingleData = String.Empty;
+                ListDownload.Clear();
+                comboboxLinkDownload.Items.Clear();
+                lblStatus.Text = "Download Complete";
+            });
+
+
+            // https://www.instagram.com/p/CLuZfB9DFuX/?utm_source=ig_web_copy_link
+        }
+
+        public void DownloadingDesign()
+        {
+            Invoke((MethodInvoker)delegate
+            {
+                labelDownloadSpeed.Enabled = true;
+                labelDownloadedAndTotal.Enabled = true;
+                lblStatus.ForeColor = Color.DodgerBlue;
+                lblStatus.Text = "Downloading...";
+            });
+            webClient.DownloadProgressChanged += new DownloadProgressChangedEventHandler(wc_DownloadProgressChanged);
+            webClient.DownloadFileCompleted += new AsyncCompletedEventHandler(wc_DownloadFileCompleted);
+        }
+
+        public void StopDownladDesign()
+        {
+            lblStatus.ForeColor = Color.Red;
+            lblStatus.Text = "Stop";
+            labelPerc.Text = "0" + "%";
+            labelSpeed.Text = String.Empty;
+            labelPerc.Text = String.Empty;
+            labelDownloaded.Text = String.Empty;
+            comboboxLinkDownload.Text = String.Empty;
+            btnBrowse.Enabled = false;
+            txtSaveLocation.Enabled = false;
+            btnStart.Text = "Start Download";
+            comboboxLinkDownload.Enabled = false;
+            txtUrl.Enabled = true;
+            btnCheck.Enabled = true;
+            txtSaveLocation.Text = String.Empty;
+            LinkDownloadSingleData = String.Empty;
+            btnStart.Enabled = false;
+            ListDownload.Clear();
+            comboboxLinkDownload.Items.Clear();
+        }
+
+
 
         #endregion
         private System.Windows.Forms.FolderBrowserDialog folderBrowserDialog;

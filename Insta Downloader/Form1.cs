@@ -12,6 +12,7 @@ using InstagramApiSharp.Classes;
 using InstagramApiSharp.Logger;
 using InstagramApiSharp.API;
 using System.Threading.Tasks;
+using System.Text.RegularExpressions;
 
 namespace Insta_Downloader
 {
@@ -22,15 +23,15 @@ namespace Insta_Downloader
 
         WebClient webClient = new WebClient();
         Stopwatch stopWatch = new Stopwatch();
+        LoginChallengeRequied loginChallengeRequied = new LoginChallengeRequied();
         static string URL;
         string LinkDownloadSingleData;
         List<string> ListDownload = new List<string>();
         private string startupPath2 = Application.StartupPath;
         Thread thread;
-        private IInstaApi InstaApi;
-        Thread thread2;
+        public static IInstaApi InstaApi;
         private string URLDownload;
-        private double speed;
+
         #endregion
 
         #region Constractor
@@ -38,22 +39,10 @@ namespace Insta_Downloader
         public Form1()
         {
             InitializeComponent();
-            btnLogout.Enabled = false;
             rememberLogin();
-            lblStatus.Text = "Stop";
-            lblStatus.ForeColor = Color.Red;
-            btnStart.Enabled = false;
-            btnBrowse.Enabled = false;
-            txtSaveLocation.Enabled = false;
-            labelPerc.Text = "0" + " %";
-            comboboxLinkDownload.Enabled = false;
-
-
         }
 
         #endregion
-
-        #region Methods and Events
 
         #region Events
 
@@ -62,7 +51,7 @@ namespace Insta_Downloader
         //Form1 Load Enent
         private void Form1_Load(object sender, EventArgs e)
         {
-
+            
         }
 
         #endregion
@@ -128,7 +117,6 @@ namespace Insta_Downloader
             more.Show();
         }
 
-
         //Button Start Download Click Event
         private void button1_Click(object sender, EventArgs e)
         {
@@ -152,8 +140,6 @@ namespace Insta_Downloader
         {
             try
             {
-
-
                 //Show Save File Dialog and get the file name from the URL and set to txtSaveLocation
                 saveFileDialog.Filter = "All File|*.*";
                 if (!string.IsNullOrEmpty(LinkDownloadSingleData))
@@ -298,32 +284,12 @@ namespace Insta_Downloader
 
         private void StopDownload()
         {
-
             if (webClient.IsBusy)
             {
                 webClient.CancelAsync();
             }
 
-            lblStatus.ForeColor = Color.Red;
-            lblStatus.Text = "Stop";
-            labelPerc.Text = "0" + "%";
-
-            labelSpeed.Text = String.Empty;
-            labelPerc.Text = String.Empty;
-            labelDownloaded.Text = String.Empty;
-            comboboxLinkDownload.Text = String.Empty;
-            btnBrowse.Enabled = false;
-            txtSaveLocation.Enabled = false;
-            btnStart.Text = "Start Download";
-            comboboxLinkDownload.Enabled = false;
-            txtUrl.Enabled = true;
-            btnCheck.Enabled = true;
-            txtSaveLocation.Text = String.Empty;
-            LinkDownloadSingleData = String.Empty;
-            btnStart.Enabled = false;
-            ListDownload.Clear();
-            comboboxLinkDownload.Items.Clear();
-
+            StopDownladDesign();
         }
 
         public void DownloaderMethod()
@@ -332,7 +298,7 @@ namespace Insta_Downloader
             {
 
                 DownloadingDesign();
-                
+
                 // Start the stopwatch which we will be using to calculate the download speed
                 stopWatch.Start();
 
@@ -445,25 +411,20 @@ namespace Insta_Downloader
                 }
                 else
                 {
-                    InvalidURLDesign();
                     MessageBox.Show("Please login first", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
                 }
 
             }
             catch
             {
-                InvalidURLDesign();
                 MessageBox.Show("can not connect in the server", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
             }
+            
 
         }
 
         public async void loginInsta()
         {
-
-
-
-
             try
             {
                 if (File.Exists(startupPath2 + "//user.txt") == true && File.Exists(startupPath2 + "//pass.txt") == true)
@@ -505,6 +466,10 @@ namespace Insta_Downloader
                     {
                         loginStatus.ForeColor = Color.Red;
                         loginStatus.Text = "Challenge Required";
+                        loginChallengeRequied.ShowDialog();
+
+
+
                     }
                     else
                     {
@@ -547,6 +512,10 @@ namespace Insta_Downloader
                     {
                         loginStatus.ForeColor = Color.Red;
                         loginStatus.Text = "Challenge Required";
+                        loginChallengeRequied.ShowDialog();
+
+
+
                     }
                     else
                     {
@@ -599,6 +568,7 @@ namespace Insta_Downloader
                         File.Delete(startupPath2 + "//pass.txt");
                         btnLogout.Enabled = false;
                         loginStatus.Text = "Not Login";
+                        loginChallengeRequied.ShowDialog();
 
                     }
                     else if (loginResult.Value.ToString() == "Invalid User")
@@ -628,95 +598,103 @@ namespace Insta_Downloader
             }
         }
 
-        public void CheckingURLDesign()
-        {
-            Invoke((MethodInvoker)delegate
-            {
-                btnCheck.Enabled = false;
-                txtUrl.Enabled = false;
-                comboboxLinkDownload.Items.Clear();
-                txtSaveLocation.Enabled = false;
-                comboboxLinkDownload.Enabled = false;
-                comboboxLinkDownload.Text = String.Empty;
-                btnBrowse.Enabled = false;
-                txtSaveLocation.Text = String.Empty;
-                lblStatus.ForeColor = Color.DarkOrange;
-                lblStatus.Text = "Checking URL";
-                progressBar1.Value = 0;
-            });
-        }
 
-        public void CheckingURLCompleteDesign(string comboboxstatus)
-        {
-            Invoke((MethodInvoker) delegate
-            {
-                comboboxLinkDownload.Enabled = true;
-                comboboxLinkDownload.Text = comboboxstatus;
-                txtSaveLocation.Enabled = true;
-                btnBrowse.Enabled = true;
-                btnCheck.Enabled = true;
-                txtUrl.Enabled = true;
-                lblStatus.ForeColor = Color.DarkGreen;
-                lblStatus.Text = "Checking URL Complete";
-            });
-        }
-
-        public void InvalidURLDesign()
-        {
-            Invoke((MethodInvoker)delegate
-            {
-                lblStatus.ForeColor = Color.Red;
-                lblStatus.Text = "Stop";
-                labelPerc.Text = "0" + "%";
-                txtUrl.Enabled = true;
-                btnCheck.Enabled = true;
-                
-            });
-
-        }
-
-        public void DownloadCompletedDesign()
-        {
-            Invoke((MethodInvoker) delegate
-            {
-                btnStart.Enabled = false;
-                labelPerc.Text = String.Empty;
-                btnStart.Text = "Start Download";
-                labelSpeed.Text = String.Empty;
-                labelDownloaded.Text = String.Empty;
-                lblStatus.ForeColor = Color.SeaGreen;
-                labelPerc.Text = "100" + " %";
-                comboboxLinkDownload.Text = String.Empty;
-                comboboxLinkDownload.Enabled = false;
-                btnCheck.Enabled = true;
-                txtSaveLocation.Enabled = false;
-                txtSaveLocation.Text = String.Empty;
-                LinkDownloadSingleData = String.Empty;
-                ListDownload.Clear();
-                comboboxLinkDownload.Items.Clear();
-                lblStatus.Text = "Download Complete";
-            });
-
-           
-            // https://www.instagram.com/p/CLuZfB9DFuX/?utm_source=ig_web_copy_link
-        }
-
-        public void DownloadingDesign()
-        {
-            Invoke((MethodInvoker) delegate
-            {
-                labelDownloadSpeed.Enabled = true;
-                labelDownloadedAndTotal.Enabled = true;
-                lblStatus.ForeColor = Color.DodgerBlue;
-                lblStatus.Text = "Downloading...";
-            });
-            webClient.DownloadProgressChanged += new DownloadProgressChangedEventHandler(wc_DownloadProgressChanged);
-            webClient.DownloadFileCompleted += new AsyncCompletedEventHandler(wc_DownloadFileCompleted);
-        }
-        #endregion
 
         #endregion
 
+        
+        //private async void SendCodeButton_Click(object sender, EventArgs e)
+        //{
+        //    bool isEmail = RadioVerifyWithEmail.Checked;
+
+        //    try
+        //    {
+
+        //        if (isEmail)
+        //        {
+
+        //            var email = await InstaApi.RequestVerifyCodeToEmailForChallengeRequireAsync();
+        //            if (email.Succeeded)
+        //            {
+        //                VerifyCodeGroupBox.Visible = true;
+        //                SelectMethodGroupBox.Visible = false;
+        //            }
+        //            else
+        //                MessageBox.Show(email.Info.Message, "Invalid Email", MessageBoxButtons.OK, MessageBoxIcon.Error);
+        //        }
+        //        else
+        //        {
+        //            var phoneNumber = await InstaApi.RequestVerifyCodeToSMSForChallengeRequireAsync();
+        //            if (phoneNumber.Succeeded)
+        //            {
+        //                VerifyCodeGroupBox.Visible = true;
+        //                SelectMethodGroupBox.Visible = false;
+        //            }
+        //            else
+        //                MessageBox.Show(phoneNumber.Info.Message, "Invalid Phone", MessageBoxButtons.OK, MessageBoxIcon.Error);
+        //        }
+        //    }
+        //    catch (Exception ex) { MessageBox.Show(ex.Message, "EX", MessageBoxButtons.OK, MessageBoxIcon.Error); }
+        //}
+
+        //private async void VerifyButton_Click(object sender, EventArgs e)
+        //{
+        //    txtVerifyCode.Text = txtVerifyCode.Text.Trim();
+        //    txtVerifyCode.Text = txtVerifyCode.Text.Replace(" ", "");
+        //    var regex = new Regex(@"^-*[0-9,\.]+$");
+        //    if (!regex.IsMatch(txtVerifyCode.Text))
+        //    {
+        //        MessageBox.Show("Verification code is numeric!!!", "ERR", MessageBoxButtons.OK, MessageBoxIcon.Error);
+        //        return;
+        //    }
+        //    if (txtVerifyCode.Text.Length != 6)
+        //    {
+        //        MessageBox.Show("Verification code must be 6 digits!!!", "ERR", MessageBoxButtons.OK, MessageBoxIcon.Error);
+        //        return;
+        //    }
+        //    try
+        //    {
+        //        // Note: calling VerifyCodeForChallengeRequireAsync function, 
+        //        // if user has two factor enabled, will wait 15 seconds and it will try to
+        //        // call LoginAsync.
+
+        //        var verifyLogin = await InstaApi.VerifyCodeForChallengeRequireAsync(txtVerifyCode.Text);
+        //        if (verifyLogin.Succeeded)
+        //        {
+        //            // you are logged in sucessfully.
+        //            VerifyCodeGroupBox.Visible = SelectMethodGroupBox.Visible = false;
+        //            // Size = challengereq;
+        //            //  GetFeedButton.Visible = true;
+        //            // Save session
+        //            //SaveSession();
+        //            //Text = $"{AppName} Connected";
+        //            MessageBox.Show("challenge passed", "status");
+        //        }
+        //        else
+        //        {
+        //            VerifyCodeGroupBox.Visible = SelectMethodGroupBox.Visible = false;
+        //            // two factor is required
+        //            if (verifyLogin.Value == InstaLoginResult.TwoFactorRequired)
+        //            {
+        //                MessageBox.Show("two factor req", "status");
+        //            }
+        //            else
+        //                MessageBox.Show(verifyLogin.Info.Message, "ERR", MessageBoxButtons.OK, MessageBoxIcon.Error);
+        //        }
+
+        //    }
+        //    catch (Exception ex) { MessageBox.Show(ex.Message, "EX", MessageBoxButtons.OK, MessageBoxIcon.Error); }
+        //}
+
+        private void button1_Click_2(object sender, EventArgs e)
+        {
+
+        }
+        private void tab_page1(object sender, EventArgs e)
+        {
+            MessageBox.Show("ddd");
+            this.Size = new Size(200, 300);
+        }
 
     }
 

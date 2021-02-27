@@ -44,9 +44,6 @@
     <Reference Include="InstagramApiSharp, Version=1.5.0.2, Culture=neutral, processorArchitecture=MSIL">
       <HintPath>..\packages\InstagramApiSharp.1.5.0.2\lib\net452\InstagramApiSharp.dll</HintPath>
     </Reference>
-    <Reference Include="Newtonsoft.Json, Version=12.0.0.0, Culture=neutral, PublicKeyToken=30ad4fe6b2a6aeed, processorArchitecture=MSIL">
-      <HintPath>..\packages\Newtonsoft.Json.12.0.3\lib\net45\Newtonsoft.Json.dll</HintPath>
-    </Reference>
     <Reference Include="System" />
     <Reference Include="System.Core" />
     <Reference Include="System.Web" />
@@ -59,9 +56,6 @@
     <Reference Include="System.Net.Http" />
     <Reference Include="System.Windows.Forms" />
     <Reference Include="System.Xml" />
-    <Reference Include="WebDriver, Version=3.141.0.0, Culture=neutral, processorArchitecture=MSIL">
-      <HintPath>..\packages\Selenium.WebDriver.3.141.0\lib\net45\WebDriver.dll</HintPath>
-    </Reference>
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Form1.cs">
@@ -75,6 +69,12 @@
     </Compile>
     <Compile Include="HelpForm.Designer.cs">
       <DependentUpon>HelpForm.cs</DependentUpon>
+    </Compile>
+    <Compile Include="LoginChallengeRequied.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="LoginChallengeRequied.Designer.cs">
+      <DependentUpon>LoginChallengeRequied.cs</DependentUpon>
     </Compile>
     <Compile Include="More.cs">
       <SubType>Form</SubType>
@@ -94,6 +94,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="HelpForm.resx">
       <DependentUpon>HelpForm.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="LoginChallengeRequied.resx">
+      <DependentUpon>LoginChallengeRequied.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="More.resx">
       <DependentUpon>More.cs</DependentUpon>
@@ -176,5 +179,6 @@
     <None Include="Resources\MainHelp.bmp" />
     <None Include="Resources\TabLogin.jpg" />
   </ItemGroup>
+  <ItemGroup />
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>
